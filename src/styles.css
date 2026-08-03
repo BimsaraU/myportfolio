@@ -179,3 +179,97 @@ a {
   font-weight: 500;
 }
 
+/* --------------------------------------------------------------------------
+   Hero
+   -------------------------------------------------------------------------- */
+
+.hero {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 96px 0 64px;
+}
+
+/* When placeElement is driving, the badge's own paint is suppressed — but it
+   stays laid out and in the document, which the API requires. */
+.placed-host[data-placed="true"] > .headline {
+  margin: 0;
+  max-width: 100%;
+  font-size: clamp(34px, 7.6vw, 82px);
+  font-weight: 600;
+  line-height: 1.04;
+  letter-spacing: -0.035em;
+  /* Long single words (the name) must never push the page sideways. */
+  overflow-wrap: break-word;
+}
+
+.hl-line {
+  display: block;
+}
+
+.hl-accent {
+  color: transparent;
+  background: linear-gradient(100deg, #a9c9ff 0%, #d9b8ff 48%, #ffb9a3 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+}
+
+.subhead {
+  max-width: min(60ch, 100%);
+  margin: 22px 0 0;
+  color: var(--muted);
+  font-size: clamp(15px, 1.5vw, 17px);
+  line-height: 1.62;
+}
+
+.stack {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 24px;
+}
+
+.chip {
+  padding: 6px 12px;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  color: var(--muted);
+  font-family: var(--mono);
+  font-size: 13px;
+}
+
+.hero-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 32px;
+}
+
+.btn {
+  padding: 12px 24px;
+  border-radius: 999px;
+  font-size: 14.5px;
+  font-weight: 600;
+  transition: transform 0.22s var(--ease), background 0.22s var(--ease),
+    border-color 0.22s var(--ease);
+}
+
+.btn:hover {
+  transform: translateY(-2px);
+}
+
+.btn-primary {
+  background: var(--text);
+  color: #06070b;
+}
+
+.btn-ghost {
+  border: 1px solid var(--line-strong);
+  color: var(--text);
+}
+
+.btn-ghost:hover {
+  border-color: var(--accent);
+  background: var(--surface-hi);
+}
+

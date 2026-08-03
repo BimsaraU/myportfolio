@@ -37,6 +37,37 @@ function Header() {
   );
 }
 
+function Hero() {
+  return (
+    <section className="hero" id="top">
+
+      <h1 className="headline">
+        <span className="hl-line">{NAME}</span>
+        <span className="hl-line hl-accent">{TAGLINE}</span>
+      </h1>
+
+      <p className="subhead">{SUBHEAD}</p>
+
+      <div className="stack" aria-label="Core stack">
+        {STACK.map((s) => (
+          <span className="chip" key={s}>
+            {s}
+          </span>
+        ))}
+      </div>
+
+      <div className="hero-actions">
+        <a className="btn btn-primary" href="#work">
+          View Work
+        </a>
+        <a className="btn btn-ghost" href={`mailto:${EMAIL}`}>
+          Get in touch
+        </a>
+      </div>
+    </section>
+  );
+}
+
 export default function App() {
 
   return (
@@ -46,6 +77,7 @@ export default function App() {
         <Header />
 
         <main>
+          <Hero />
         </main>
 
       </div>
