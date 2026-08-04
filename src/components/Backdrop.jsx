@@ -30,6 +30,27 @@ export default function Backdrop({ reduced }) {
     let tx = 0;
     let px = 0;
 
+    let stars = [];
+
+    // Deterministic pseudo-random so the starfield is stable across reloads.
+    function rand(seed) {
+      const x = Math.sin(seed * 12.9898) * 43758.5453;
+      return x - Math.floor(x);
+    }
+
+    function seedStars() {
+      stars = [];
+      const count = Math.round((w * h) / 26000);
+      for (let i = 0; i < count; i++) {
+        stars.push({
+          x: rand(i + 1) * w,
+          y: rand(i + 99) * h * 0.62,
+          r: 0.4 + rand(i + 7) * 0.9,
+          a: 0.12 + rand(i + 33) * 0.35,
+          tw: 0.6 + rand(i + 51) * 1.8,
+        });
+      }
+    }
 
     function resize() {
       const rect = canvas.getBoundingClientRect();
@@ -39,6 +60,7 @@ export default function Backdrop({ reduced }) {
       canvas.width = Math.round(w * dpr);
       canvas.height = Math.round(h * dpr);
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      seedStars();
       if (reduced) draw(0);
     }
 
@@ -54,6 +76,16 @@ export default function Backdrop({ reduced }) {
       sky.addColorStop(1, "#2c1c24");
       ctx.fillStyle = sky;
       ctx.fillRect(0, 0, w, h);
+
+      // 2. Starfield.
+      for (let i = 0; i < stars.length; i++) {
+        const s = stars[i];
+        const tw = reduced ? 1 : 0.75 + Math.sin(t / 900 + s.tw * 6) * 0.25;
+        ctx.globalAlpha = s.a * tw;
+        ctx.fillStyle = "#cdd6f4";
+        ctx.fillRect(s.x, s.y, s.r, s.r);
+      }
+      ctx.globalAlpha = 1;
 
     }
 
