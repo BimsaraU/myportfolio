@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import Backdrop from "./components/Backdrop";
 import {
   NAME,
   TAGLINE,
@@ -72,6 +73,7 @@ export default function App() {
 
   return (
     <>
+      <Backdrop />
 
       <div className="page">
         <Header />
