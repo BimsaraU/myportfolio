@@ -64,6 +64,24 @@ export default function Backdrop({ reduced }) {
       if (reduced) draw(0);
     }
 
+    // One ridge: a summed-sine silhouette filled with a flat dark tone.
+    function ridge(yBase, amp, freq, phase, fill, drift) {
+      ctx.beginPath();
+      ctx.moveTo(0, h);
+      const step = 6;
+      for (let x = 0; x <= w + step; x += step) {
+        const n =
+          Math.sin(x * freq + phase) * amp +
+          Math.sin(x * freq * 2.3 + phase * 1.7) * amp * 0.4 +
+          Math.sin(x * freq * 0.6 + phase * 0.5) * amp * 0.6;
+        ctx.lineTo(x + drift, yBase + n);
+      }
+      ctx.lineTo(w, h);
+      ctx.closePath();
+      ctx.fillStyle = fill;
+      ctx.fill();
+    }
+
     function draw(t) {
       px += (tx - px) * 0.06;
 
@@ -86,6 +104,12 @@ export default function Backdrop({ reduced }) {
         ctx.fillRect(s.x, s.y, s.r, s.r);
       }
       ctx.globalAlpha = 1;
+
+      // 4. Ridges, far to near. Nearer ridges are darker and parallax more.
+      const drift = reduced ? 0 : t / 60000;
+      ridge(h * 0.74, h * 0.045, 0.0042, 1.2 + drift, "#191320", px * 10);
+      ridge(h * 0.83, h * 0.055, 0.0031, 3.7 + drift * 1.4, "#100c15", px * 20);
+      ridge(h * 0.94, h * 0.05, 0.0024, 5.1 + drift * 1.9, "#08060b", px * 34);
 
     }
 
