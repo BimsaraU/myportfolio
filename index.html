@@ -25,6 +25,17 @@
       rel="stylesheet"
     />
 
+    <script>
+      // Capability probe before first paint so the hero never renders in the
+      // wrong mode. React reads the class back in useDomCanvas().
+      (function () {
+        var probe = document.createElement("canvas").getContext("2d");
+        var ok = typeof (probe && probe.placeElement) === "function";
+        document.documentElement.classList.add(
+          ok ? "has-dom-canvas" : "no-dom-canvas"
+        );
+      })();
+    </script>
   </head>
   <body>
     <div id="root"></div>

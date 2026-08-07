@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import Backdrop from "./components/Backdrop";
+import PlacedBadge from "./components/PlacedBadge";
 import {
   NAME,
   TAGLINE,
@@ -41,10 +42,12 @@ function Header() {
 function Hero() {
   return (
     <section className="hero" id="top">
+      <PlacedBadge>
         <a className="badge" href="#work">
           <span className="badge-dot" aria-hidden="true" />
           Open to internships — 2026
         </a>
+      </PlacedBadge>
 
       <h1 className="headline">
         <span className="hl-line">{NAME}</span>
