@@ -41,6 +41,10 @@ function Header() {
 function Hero() {
   return (
     <section className="hero" id="top">
+        <a className="badge" href="#work">
+          <span className="badge-dot" aria-hidden="true" />
+          Open to internships — 2026
+        </a>
 
       <h1 className="headline">
         <span className="hl-line">{NAME}</span>

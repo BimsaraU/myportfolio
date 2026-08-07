@@ -201,9 +201,36 @@ a {
   padding: clamp(56px, 12vh, 120px) 0 clamp(40px, 7vh, 72px);
 }
 
-/* When placeElement is driving, the badge's own paint is suppressed — but it
-   stays laid out and in the document, which the API requires. */
-.placed-host[data-placed="true"] > .headline {
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  padding: 8px 15px 8px 13px;
+  border: 1px solid var(--line-strong);
+  border-radius: 999px;
+  background: rgba(143, 194, 255, 0.07);
+  color: var(--text);
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  white-space: nowrap;
+  transition: background 0.25s var(--ease), border-color 0.25s var(--ease);
+}
+
+.badge:hover {
+  background: rgba(143, 194, 255, 0.13);
+  border-color: var(--accent);
+}
+
+.badge-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #64d68a;
+  box-shadow: 0 0 0 3px rgba(100, 214, 138, 0.18);
+}
+
+.headline {
   margin: 0;
   max-width: 100%;
   font-size: clamp(30px, 7.6vw, 82px);
