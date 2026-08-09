@@ -25,3 +25,13 @@ export const NAV = [
   { label: "About", href: "#about" },
   { label: "Contact", href: "#contact" },
 ];
+
+/**
+ * Four headline metrics. `decimals` and `suffix` drive the count-up format.
+ */
+export const STATS = [
+  { value: 3.75, decimals: 2, suffix: "", label: "Current GPA" },
+  { value: 6, decimals: 0, suffix: "", label: "Projects Shipped" },
+  { value: 7, decimals: 0, suffix: "", label: "Leadership Roles" },
+  { value: 9, decimals: 0, suffix: "A", label: "O/L Passes" },
+];

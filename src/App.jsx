@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import Backdrop from "./components/Backdrop";
 import PlacedBadge from "./components/PlacedBadge";
+import Stats from "./components/Stats";
 import {
   NAME,
   TAGLINE,
@@ -87,6 +88,7 @@ export default function App() {
 
         <main>
           <Hero />
+          <Stats />
         </main>
 
       </div>
