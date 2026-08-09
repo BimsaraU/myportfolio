@@ -46,6 +46,14 @@ export default function PlacedBadge({ reduced, children }) {
 
     host.dataset.placed = "true";
 
+    function downgrade() {
+      dead = true;
+      cancelAnimationFrame(raf);
+      raf = 0;
+      delete host.dataset.placed;
+      if (canvas.parentNode) canvas.remove();
+    }
+
     // Padding around the badge so the ring has room to draw.
     const PAD = 26;
 
@@ -72,7 +80,8 @@ export default function PlacedBadge({ reduced, children }) {
     function draw(t) {
       if (dead) return;
 
-      ctx.clearRect(0, 0, w, h);
+      try {
+        ctx.clearRect(0, 0, w, h);
 
         const badge = host.firstElementChild;
         if (!badge) return;
@@ -118,6 +127,11 @@ export default function PlacedBadge({ reduced, children }) {
         ctx.translate(bx, by);
         ctx.placeElement(badge, 0, 0);
         ctx.restore();
+      } catch (err) {
+        // Never leave an invisible badge behind.
+        downgrade();
+        return;
+      }
 
       if (!reduced) raf = requestAnimationFrame(draw);
     }
