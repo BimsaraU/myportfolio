@@ -10,6 +10,7 @@ import {
   NAV,
   EMAIL,
   GITHUB,
+  PROJECTS,
 } from "./content";
 
 function Header() {
@@ -77,6 +78,44 @@ function Hero() {
   );
 }
 
+function Work() {
+  return (
+    <section className="work" id="work">
+      <h2 className="section-title">Selected Work</h2>
+
+      <div className="cards">
+        {PROJECTS.map((p) => (
+          <a
+            className="card"
+            key={p.name}
+            href={p.href}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <span className="card-context">{p.context}</span>
+            <h3 className="card-name">{p.name}</h3>
+            <p className="card-blurb">{p.blurb}</p>
+            <ul className="card-tech">
+              {p.tech.map((t) => (
+                <li key={t}>{t}</li>
+              ))}
+            </ul>
+          </a>
+        ))}
+      </div>
+
+      <a
+        className="work-more"
+        href={GITHUB}
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        All repositories on GitHub →
+      </a>
+    </section>
+  );
+}
+
 export default function App() {
 
   return (
@@ -89,6 +128,7 @@ export default function App() {
         <main>
           <Hero />
           <Stats />
+          <Work />
         </main>
 
       </div>
