@@ -116,6 +116,22 @@ function Work() {
   );
 }
 
+function Contact() {
+  return (
+    <section className="contact" id="contact">
+      <h2 className="section-title">Contact</h2>
+      <p className="contact-line">
+        <a href={`mailto:${EMAIL}`}>{EMAIL}</a>
+      </p>
+      <p className="contact-line muted">
+        <a href={GITHUB} target="_blank" rel="noopener noreferrer">
+          github.com/BimsaraU
+        </a>
+      </p>
+    </section>
+  );
+}
+
 export default function App() {
 
   return (
@@ -129,8 +145,13 @@ export default function App() {
           <Hero />
           <Stats />
           <Work />
+          <Contact />
         </main>
 
+        <footer className="foot">
+          <span>© {new Date().getFullYear()} {NAME}</span>
+          <span className="muted">University of Moratuwa</span>
+        </footer>
       </div>
     </>
   );
