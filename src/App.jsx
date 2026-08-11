@@ -13,7 +13,7 @@ import {
   PROJECTS,
 } from "./content";
 
-function Header() {
+function Header({ open, setOpen }) {
   return (
     <header className="header">
       <a className="brand" href="#top" aria-label={`${NAME} — home`}>
@@ -37,6 +37,16 @@ function Header() {
         </a>
       </nav>
 
+      <button
+        className="burger"
+        type="button"
+        aria-label={open ? "Close menu" : "Open menu"}
+        aria-expanded={open}
+        onClick={() => setOpen(!open)}
+      >
+        <span />
+        <span />
+      </button>
     </header>
   );
 }
@@ -133,13 +143,34 @@ function Contact() {
 }
 
 export default function App() {
+  const [open, setOpen] = useState(false);
+
+  useEffect(() => {
+    document.body.classList.toggle("menu-open", open);
+    const onKey = (e) => e.key === "Escape" && setOpen(false);
+    document.addEventListener("keydown", onKey);
+    return () => document.removeEventListener("keydown", onKey);
+  }, [open]);
 
   return (
     <>
       <Backdrop />
 
       <div className="page">
-        <Header />
+        <Header open={open} setOpen={setOpen} />
+
+        {open && (
+          <div className="sheet" onClick={() => setOpen(false)}>
+            {NAV.map((item) => (
+              <a key={item.href} href={item.href}>
+                {item.label}
+              </a>
+            ))}
+            <a href={GITHUB} target="_blank" rel="noopener noreferrer">
+              GitHub
+            </a>
+          </div>
+        )}
 
         <main>
           <Hero />
