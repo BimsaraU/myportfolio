@@ -13,6 +13,23 @@ import {
   PROJECTS,
 } from "./content";
 
+function useReducedMotion() {
+  const [reduced, setReduced] = useState(
+    () =>
+      typeof window !== "undefined" &&
+      window.matchMedia("(prefers-reduced-motion: reduce)").matches
+  );
+
+  useEffect(() => {
+    const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const on = () => setReduced(mq.matches);
+    mq.addEventListener("change", on);
+    return () => mq.removeEventListener("change", on);
+  }, []);
+
+  return reduced;
+}
+
 function Header({ open, setOpen }) {
   return (
     <header className="header">
@@ -51,10 +68,10 @@ function Header({ open, setOpen }) {
   );
 }
 
-function Hero() {
+function Hero({ reduced }) {
   return (
     <section className="hero" id="top">
-      <PlacedBadge>
+      <PlacedBadge reduced={reduced}>
         <a className="badge" href="#work">
           <span className="badge-dot" aria-hidden="true" />
           Open to internships — 2026
@@ -143,6 +160,7 @@ function Contact() {
 }
 
 export default function App() {
+  const reduced = useReducedMotion();
   const [open, setOpen] = useState(false);
 
   useEffect(() => {
@@ -154,7 +172,7 @@ export default function App() {
 
   return (
     <>
-      <Backdrop />
+      <Backdrop reduced={reduced} />
 
       <div className="page">
         <Header open={open} setOpen={setOpen} />
@@ -173,8 +191,8 @@ export default function App() {
         )}
 
         <main>
-          <Hero />
-          <Stats />
+          <Hero reduced={reduced} />
+          <Stats reduced={reduced} />
           <Work />
           <Contact />
         </main>
