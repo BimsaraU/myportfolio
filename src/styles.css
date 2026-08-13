@@ -229,6 +229,66 @@ a {
   pointer-events: none;
 }
 
+/* Fallback ring.
+   placeElement() currently ships only in Chrome builds with the experimental
+   flag, so for nearly every visitor the canvas is removed at mount. Without
+   this the badge would be a plain pill and the effect would never be seen.
+   When the canvas IS driving, the rule below switches this off so the ring is
+   not drawn twice. */
+/* A dashed pill that breathes. Rotating it would smear, since the box is far
+   wider than it is tall, so the motion lives in opacity and scale instead. */
+.placed-host::before {
+  content: "";
+  position: absolute;
+  inset: -9px;
+  border: 1px dashed rgba(150, 200, 255, 0.32);
+  border-radius: 999px;
+  animation: ringbreathe 4.5s ease-in-out infinite;
+  pointer-events: none;
+}
+
+.placed-host::after {
+  content: "";
+  position: absolute;
+  inset: -22px;
+  border-radius: 999px;
+  background: radial-gradient(
+    circle,
+    rgba(120, 190, 255, 0.13) 0%,
+    rgba(120, 190, 255, 0) 70%
+  );
+  animation: ringpulse 2.8s ease-in-out infinite;
+  pointer-events: none;
+}
+
+/* Canvas is driving — it paints the ring itself. */
+.placed-host[data-placed="true"]::before,
+.placed-host[data-placed="true"]::after {
+  display: none;
+}
+
+@keyframes ringbreathe {
+  0%,
+  100% {
+    opacity: 0.5;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.035);
+  }
+}
+
+@keyframes ringpulse {
+  0%,
+  100% {
+    opacity: 0.55;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
 /* When placeElement is driving, the badge's own paint is suppressed — but it
    stays laid out and in the document, which the API requires. */
 .placed-host[data-placed="true"] > .badge {
