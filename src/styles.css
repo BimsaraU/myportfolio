@@ -1,25 +1,28 @@
 /* ==========================================================================
-   Bimsara Udurawana — portfolio
-   Dark, generated backdrop. No external media.
+   Bimsara Udurawana, portfolio
+   Dark generated backdrop, no external media.
+   Display face is a retro dot matrix, used only where it stays legible.
    ========================================================================== */
 
 :root {
   --bg: #05060a;
   --text: #f2f4f8;
-  --muted: #9aa3b2;
-  --dim: #6b7382;
-  --line: rgba(255, 255, 255, 0.09);
-  --line-strong: rgba(255, 255, 255, 0.16);
+  --muted: #98a1b0;
+  --dim: #69707e;
+  --line: rgba(255, 255, 255, 0.08);
+  --line-strong: rgba(255, 255, 255, 0.15);
   --accent: #8fc2ff;
-  --accent-dim: rgba(143, 194, 255, 0.14);
-  --surface: rgba(255, 255, 255, 0.035);
-  --surface-hi: rgba(255, 255, 255, 0.06);
+  --surface: rgba(255, 255, 255, 0.03);
+  --surface-hi: rgba(255, 255, 255, 0.055);
 
   --sans: "Inter", "Segoe UI", system-ui, sans-serif;
   --mono: "JetBrains Mono", ui-monospace, "Cascadia Code", monospace;
+  --display: "BubbledotICG-FinePos", "Geist Pixel Circle", var(--mono);
 
   --ease: cubic-bezier(0.22, 1, 0.36, 1);
-  --maxw: 1080px;
+  --maxw: 1060px;
+
+  --gap: clamp(56px, 11vh, 108px);
 }
 
 *,
@@ -51,13 +54,17 @@ a {
   text-decoration: none;
 }
 
+ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
 :focus-visible {
   outline: 2px solid var(--accent);
   outline-offset: 3px;
   border-radius: 6px;
 }
-
-/* Generated backdrop, behind everything. ---------------------------------- */
 
 .backdrop {
   position: fixed;
@@ -88,46 +95,39 @@ a {
   align-items: center;
   justify-content: space-between;
   gap: 16px;
-  padding: 18px 0;
+  padding: 16px 0;
   background: linear-gradient(
     to bottom,
-    rgba(5, 6, 10, 0.88),
+    rgba(5, 6, 10, 0.9),
     rgba(5, 6, 10, 0)
   );
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
 }
 
-.brand {
-  display: inline-flex;
-  align-items: center;
-  gap: 11px;
-  font-weight: 600;
-  letter-spacing: -0.01em;
-}
-
 .brand-mark {
   display: grid;
   place-items: center;
-  width: 34px;
-  height: 34px;
+  width: 36px;
+  height: 36px;
   border: 1px solid var(--line-strong);
   border-radius: 10px;
   background: var(--surface-hi);
-  font-family: var(--mono);
-  font-size: 12px;
-  letter-spacing: 0.02em;
-  color: var(--text);
+  font-family: var(--display);
+  font-size: 13px;
+  letter-spacing: 0.04em;
+  transition: border-color 0.2s var(--ease), background 0.2s var(--ease);
 }
 
-.brand-name {
-  font-size: 14.5px;
+.brand:hover .brand-mark {
+  border-color: var(--accent);
+  background: rgba(143, 194, 255, 0.1);
 }
 
 .nav {
   display: flex;
   align-items: center;
-  gap: clamp(14px, 2.4vw, 28px);
+  gap: clamp(16px, 2.4vw, 30px);
 }
 
 .nav-link {
@@ -175,7 +175,6 @@ a {
   background: var(--text);
 }
 
-/* Only rendered while open — App mounts it conditionally. */
 .sheet {
   position: fixed;
   inset: 0;
@@ -185,7 +184,7 @@ a {
   align-items: center;
   justify-content: center;
   gap: 26px;
-  background: rgba(5, 6, 10, 0.96);
+  background: rgba(5, 6, 10, 0.97);
   backdrop-filter: blur(10px);
   font-size: 22px;
   font-weight: 500;
@@ -199,27 +198,20 @@ a {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  padding: clamp(56px, 12vh, 120px) 0 clamp(40px, 7vh, 72px);
+  padding: clamp(52px, 11vh, 104px) 0 var(--gap);
 }
 
-/* Flex items default to min-width:auto, which lets long content push the
-   page wider than the viewport. Bound every hero child instead. */
 .hero > * {
   max-width: 100%;
   min-width: 0;
 }
 
-/* The placed badge and its canvas share a stacking context. The canvas is
-   offset by the same padding the component uses so the ring is centred. */
-
 .placed-host {
   position: relative;
   display: inline-flex;
-  /* The host must hug the badge exactly — the fallback ring is positioned
-     from its box, and a stretched host stretches the ring with it. */
   align-self: flex-start;
   width: fit-content;
-  margin-bottom: clamp(22px, 3.6vh, 34px);
+  margin-bottom: clamp(24px, 4vh, 36px);
 }
 
 .placed-canvas {
@@ -229,19 +221,17 @@ a {
   pointer-events: none;
 }
 
-/* Fallback ring.
-   placeElement() currently ships only in Chrome builds with the experimental
-   flag, so for nearly every visitor the canvas is removed at mount. Without
-   this the badge would be a plain pill and the effect would never be seen.
-   When the canvas IS driving, the rule below switches this off so the ring is
-   not drawn twice. */
-/* A dashed pill that breathes. Rotating it would smear, since the box is far
-   wider than it is tall, so the motion lives in opacity and scale instead. */
+.placed-host[data-placed="true"] > .badge {
+  opacity: 0;
+}
+
+/* Fallback ring. placeElement ships only behind a Chrome flag, so for nearly
+   every visitor the canvas is removed at mount and this stands in for it. */
 .placed-host::before {
   content: "";
   position: absolute;
   inset: -9px;
-  border: 1px dashed rgba(150, 200, 255, 0.32);
+  border: 1px dashed rgba(150, 200, 255, 0.28);
   border-radius: 999px;
   animation: ringbreathe 4.5s ease-in-out infinite;
   pointer-events: none;
@@ -254,14 +244,13 @@ a {
   border-radius: 999px;
   background: radial-gradient(
     circle,
-    rgba(120, 190, 255, 0.13) 0%,
+    rgba(120, 190, 255, 0.12) 0%,
     rgba(120, 190, 255, 0) 70%
   );
   animation: ringpulse 2.8s ease-in-out infinite;
   pointer-events: none;
 }
 
-/* Canvas is driving — it paints the ring itself. */
 .placed-host[data-placed="true"]::before,
 .placed-host[data-placed="true"]::after {
   display: none;
@@ -275,7 +264,7 @@ a {
   }
   50% {
     opacity: 1;
-    transform: scale(1.035);
+    transform: scale(1.03);
   }
 }
 
@@ -289,12 +278,6 @@ a {
   }
 }
 
-/* When placeElement is driving, the badge's own paint is suppressed — but it
-   stays laid out and in the document, which the API requires. */
-.placed-host[data-placed="true"] > .badge {
-  opacity: 0;
-}
-
 .badge {
   display: inline-flex;
   align-items: center;
@@ -302,17 +285,15 @@ a {
   padding: 8px 15px 8px 13px;
   border: 1px solid var(--line-strong);
   border-radius: 999px;
-  background: rgba(143, 194, 255, 0.07);
-  color: var(--text);
+  background: rgba(143, 194, 255, 0.06);
   font-size: 13px;
   font-weight: 500;
-  letter-spacing: -0.01em;
   white-space: nowrap;
   transition: background 0.25s var(--ease), border-color 0.25s var(--ease);
 }
 
 .badge:hover {
-  background: rgba(143, 194, 255, 0.13);
+  background: rgba(143, 194, 255, 0.12);
   border-color: var(--accent);
 }
 
@@ -324,14 +305,16 @@ a {
   box-shadow: 0 0 0 3px rgba(100, 214, 138, 0.18);
 }
 
+/* The dot matrix face is wide and geometric, so it needs tighter tracking and
+   a slightly smaller ceiling than a normal sans would. */
 .headline {
   margin: 0;
   max-width: 100%;
-  font-size: clamp(30px, 7.6vw, 82px);
-  font-weight: 600;
-  line-height: 1.04;
-  letter-spacing: -0.035em;
-  /* Long single words (the name) must never push the page sideways. */
+  font-family: var(--display);
+  font-size: clamp(27px, 6.4vw, 68px);
+  font-weight: 400;
+  line-height: 1.16;
+  letter-spacing: -0.02em;
   overflow-wrap: break-word;
 }
 
@@ -347,18 +330,18 @@ a {
 }
 
 .subhead {
-  max-width: min(60ch, 100%);
-  margin: clamp(18px, 2.6vh, 26px) 0 0;
+  max-width: min(58ch, 100%);
+  margin: clamp(22px, 3vh, 30px) 0 0;
   color: var(--muted);
-  font-size: clamp(15px, 1.5vw, 17px);
-  line-height: 1.62;
+  font-size: clamp(15px, 1.5vw, 16.5px);
+  line-height: 1.68;
 }
 
 .stack {
   display: flex;
   flex-wrap: wrap;
   gap: 8px;
-  margin-top: clamp(20px, 3vh, 28px);
+  margin-top: clamp(22px, 3vh, 30px);
 }
 
 .chip {
@@ -375,7 +358,7 @@ a {
   display: flex;
   flex-wrap: wrap;
   gap: 12px;
-  margin-top: clamp(26px, 4vh, 38px);
+  margin-top: clamp(28px, 4vh, 40px);
 }
 
 .btn {
@@ -398,7 +381,6 @@ a {
 
 .btn-ghost {
   border: 1px solid var(--line-strong);
-  color: var(--text);
 }
 
 .btn-ghost:hover {
@@ -414,9 +396,8 @@ a {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 1px;
-  margin: clamp(20px, 4vh, 40px) 0;
   border: 1px solid var(--line);
-  border-radius: 16px;
+  border-radius: 14px;
   background: var(--line);
   overflow: hidden;
 }
@@ -426,12 +407,12 @@ a {
   flex-direction: column;
   gap: 5px;
   padding: clamp(18px, 3vw, 26px);
-  background: rgba(8, 10, 16, 0.72);
+  background: rgba(8, 10, 16, 0.76);
 }
 
 .stat-value {
   font-family: var(--mono);
-  font-size: clamp(22px, 3vw, 30px);
+  font-size: clamp(21px, 2.8vw, 28px);
   font-weight: 700;
   letter-spacing: -0.02em;
   font-variant-numeric: tabular-nums;
@@ -443,36 +424,59 @@ a {
 }
 
 /* --------------------------------------------------------------------------
-   Work
+   Section headings
    -------------------------------------------------------------------------- */
 
+.section-head {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  margin-bottom: clamp(24px, 3.4vh, 34px);
+  padding-bottom: 14px;
+  border-bottom: 1px solid var(--line);
+}
+
 .section-title {
-  margin: 0 0 clamp(20px, 3vh, 28px);
-  font-size: clamp(13px, 1.4vw, 14px);
-  font-weight: 500;
-  letter-spacing: 0.14em;
+  margin: 0;
+  font-family: var(--display);
+  font-size: clamp(15px, 1.7vw, 18px);
+  font-weight: 400;
+  letter-spacing: 0.06em;
   text-transform: uppercase;
+}
+
+.section-count {
   color: var(--dim);
+  font-family: var(--mono);
+  font-size: 12px;
 }
 
 .work,
+.about,
 .contact {
-  padding: clamp(48px, 9vh, 90px) 0;
+  padding: var(--gap) 0 0;
 }
+
+/* --------------------------------------------------------------------------
+   Work
+   -------------------------------------------------------------------------- */
 
 .cards {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 14px;
+  grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
+  gap: 12px;
+  /* Equal row heights, so the tech tags and repo paths line up across a row
+     even when the blurbs differ in length. */
+  align-items: stretch;
 }
 
 .card {
   display: flex;
   flex-direction: column;
-  padding: clamp(20px, 2.4vw, 26px);
+  padding: clamp(20px, 2.3vw, 26px);
   border: 1px solid var(--line);
-  border-radius: 16px;
-  background: rgba(9, 11, 18, 0.68);
+  border-radius: 14px;
+  background: rgba(9, 11, 18, 0.7);
   transition: transform 0.28s var(--ease), border-color 0.28s var(--ease),
     background 0.28s var(--ease);
 }
@@ -480,37 +484,57 @@ a {
 .card:hover {
   transform: translateY(-3px);
   border-color: var(--line-strong);
-  background: rgba(14, 17, 26, 0.85);
+  background: rgba(14, 17, 26, 0.88);
+}
+
+.card-top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 10px;
 }
 
 .card-context {
   color: var(--dim);
   font-family: var(--mono);
-  font-size: 11.5px;
-  letter-spacing: 0.02em;
+  font-size: 11px;
+  line-height: 1.5;
+}
+
+.card-arrow {
+  flex-shrink: 0;
+  color: var(--dim);
+  font-size: 14px;
+  transition: color 0.24s var(--ease), transform 0.24s var(--ease);
+}
+
+.card:hover .card-arrow {
+  color: var(--accent);
+  transform: translate(2px, -2px);
 }
 
 .card-name {
-  margin: 10px 0 0;
-  font-size: 19px;
+  margin: 9px 0 0;
+  font-size: 18.5px;
   font-weight: 600;
   letter-spacing: -0.02em;
 }
 
+/* The blurb takes the slack so the tech tags and repo path sit at the same
+   height across every card in a row. */
 .card-blurb {
+  flex: 1;
   margin: 10px 0 18px;
   color: var(--muted);
-  font-size: 14px;
-  line-height: 1.6;
+  font-size: 13.8px;
+  line-height: 1.62;
 }
 
 .card-tech {
   display: flex;
   flex-wrap: wrap;
   gap: 6px;
-  margin: auto 0 0;
-  padding: 0;
-  list-style: none;
+  margin: 0;
 }
 
 .card-tech li {
@@ -519,43 +543,149 @@ a {
   border-radius: 6px;
   color: var(--dim);
   font-family: var(--mono);
-  font-size: 11px;
+  font-size: 10.5px;
 }
 
-.work-more {
-  display: inline-block;
-  margin-top: 22px;
+.card-repo {
+  margin-top: 14px;
+  padding-top: 12px;
+  border-top: 1px solid var(--line);
+  color: var(--dim);
+  font-family: var(--mono);
+  font-size: 11px;
+  overflow-wrap: anywhere;
+  transition: color 0.24s var(--ease);
+}
+
+.card:hover .card-repo {
   color: var(--accent);
-  font-size: 14px;
-  font-weight: 500;
 }
 
 /* --------------------------------------------------------------------------
-   Contact + footer
+   About
    -------------------------------------------------------------------------- */
 
-.contact-line {
-  margin: 0 0 8px;
-  font-size: clamp(18px, 2.4vw, 24px);
+.about-grid {
+  display: grid;
+  grid-template-columns: 1.1fr 1fr;
+  gap: clamp(28px, 5vw, 56px);
+}
+
+.col-title {
+  margin: 0 0 16px;
+  color: var(--dim);
+  font-size: 12px;
   font-weight: 500;
-  letter-spacing: -0.02em;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
 }
 
-.contact-line a:hover {
-  color: var(--accent);
+.roles {
+  display: flex;
+  flex-direction: column;
 }
 
-.contact-line.muted {
-  font-size: 15px;
-  font-weight: 400;
+.role {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  padding: 13px 0;
+  border-bottom: 1px solid var(--line);
+}
+
+.role:last-child {
+  border-bottom: 0;
+}
+
+.role-title {
+  font-size: 14.5px;
+  font-weight: 500;
+}
+
+.role-meta {
+  color: var(--dim);
+  font-family: var(--mono);
+  font-size: 11.5px;
+}
+
+.skill-group {
+  margin-bottom: 22px;
+}
+
+.skill-label {
+  display: block;
+  margin-bottom: 10px;
   color: var(--muted);
+  font-size: 13px;
+  font-weight: 500;
 }
+
+.skill-items {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.skill-items li {
+  padding: 5px 10px;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  background: var(--surface);
+  color: var(--dim);
+  font-family: var(--mono);
+  font-size: 11px;
+}
+
+/* --------------------------------------------------------------------------
+   Contact
+   -------------------------------------------------------------------------- */
+
+.contact-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 12px;
+}
+
+.contact-item {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  padding: 20px;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  background: rgba(9, 11, 18, 0.7);
+  transition: border-color 0.24s var(--ease), background 0.24s var(--ease);
+}
+
+.contact-item:hover {
+  border-color: var(--accent);
+  background: rgba(14, 17, 26, 0.88);
+}
+
+.contact-label {
+  color: var(--dim);
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.contact-value {
+  font-size: 14.5px;
+  font-weight: 500;
+  overflow-wrap: anywhere;
+}
+
+/* --------------------------------------------------------------------------
+   Footer
+   -------------------------------------------------------------------------- */
 
 .foot {
   display: flex;
   justify-content: space-between;
   gap: 12px;
-  padding: 26px 0 34px;
+  margin-top: var(--gap);
+  padding: 24px 0 34px;
   border-top: 1px solid var(--line);
   color: var(--dim);
   font-size: 13px;
@@ -569,6 +699,12 @@ a {
    Mobile
    -------------------------------------------------------------------------- */
 
+@media (max-width: 860px) {
+  .about-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
 @media (max-width: 720px) {
   .nav {
     display: none;
@@ -576,10 +712,6 @@ a {
 
   .burger {
     display: flex;
-  }
-
-  .brand-name {
-    display: none;
   }
 
   .stats {

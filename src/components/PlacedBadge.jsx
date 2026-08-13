@@ -4,7 +4,7 @@ import { useEffect, useRef } from "react";
  * The DOM-in-Canvas element.
  *
  * `ctx.placeElement()` (Chrome's experimental Canvas 2D DOM-in-Canvas API)
- * rasterises live DOM into a canvas while leaving it interactive — the badge
+ * rasterises live DOM into a canvas while leaving it interactive. The badge
  * below stays clickable, focusable and readable by screen readers even though
  * what you see is painted by canvas.
  *
@@ -15,7 +15,7 @@ import { useEffect, useRef } from "react";
  *
  * Around the placed badge the canvas draws a scanning ring and a pulse that
  * plain DOM could not composite behind it. Where the API is unavailable the
- * canvas is removed and the badge renders as ordinary DOM — visually near
+ * canvas is removed and the badge renders as ordinary DOM, visually near
  * identical, minus the ring.
  */
 export default function PlacedBadge({ reduced, children }) {
@@ -107,7 +107,7 @@ export default function PlacedBadge({ reduced, children }) {
           ctx.fillStyle = glow;
           ctx.fillRect(0, 0, w, h);
 
-          // A dashed ring that rotates around the badge. Drawn behind it —
+          // A dashed ring that rotates around the badge. Drawn behind it ,
           // this is the compositing plain DOM could not do.
           ctx.save();
           ctx.translate(cx, cy);
@@ -121,7 +121,7 @@ export default function PlacedBadge({ reduced, children }) {
           ctx.restore();
         }
 
-        // The live DOM. Translate only — rotating or non-uniformly scaling a
+        // The live DOM. Translate only. Rotating or non-uniformly scaling a
         // placed element breaks its native hit-testing.
         ctx.save();
         ctx.translate(bx, by);

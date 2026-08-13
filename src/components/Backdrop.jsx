@@ -1,7 +1,7 @@
 import { useEffect, useRef } from "react";
 
 /**
- * Generated dark backdrop — replaces the original CloudFront video entirely.
+ * Generated dark backdrop, replaces the original CloudFront video entirely.
  *
  * Three layers, all drawn in canvas so there is no external asset to load:
  *   1. a deep vertical gradient (near-black at the top, faint ember at the
@@ -104,7 +104,7 @@ export default function Backdrop({ reduced }) {
     function draw(t) {
       px += (tx - px) * 0.06;
 
-      // 1. Sky gradient — near-black overhead, faint ember at the horizon.
+      // 1. Sky gradient, near-black overhead, faint ember at the horizon.
       const sky = ctx.createLinearGradient(0, 0, 0, h);
       sky.addColorStop(0, "#05060a");
       sky.addColorStop(0.45, "#0a0b12");
@@ -147,7 +147,7 @@ export default function Backdrop({ reduced }) {
 
       // 5. Settle the very bottom into the page background colour. The
       //    nearest ridge is already #08060b, so this only closes the last
-      //    few percent — without it the fixed backdrop meets the scrolling
+      //    few percent. Without it the fixed backdrop meets the scrolling
       //    content on a visible seam.
       const fade = ctx.createLinearGradient(0, h * 0.93, 0, h);
       fade.addColorStop(0, "rgba(5, 6, 10, 0)");

@@ -9,8 +9,11 @@ import {
   STACK,
   NAV,
   EMAIL,
+  EMAIL_UNI,
   GITHUB,
   PROJECTS,
+  ROLES,
+  SKILLS,
 } from "./content";
 
 function useReducedMotion() {
@@ -33,9 +36,8 @@ function useReducedMotion() {
 function Header({ open, setOpen }) {
   return (
     <header className="header">
-      <a className="brand" href="#top" aria-label={`${NAME} — home`}>
+      <a className="brand" href="#top" aria-label={`${NAME}, home`}>
         <span className="brand-mark">BU</span>
-        <span className="brand-name">{NAME}</span>
       </a>
 
       <nav className="nav" aria-label="Primary">
@@ -74,7 +76,7 @@ function Hero({ reduced }) {
       <PlacedBadge reduced={reduced}>
         <a className="badge" href="#work">
           <span className="badge-dot" aria-hidden="true" />
-          Open to internships — 2026
+          Open to internships, 2026
         </a>
       </PlacedBadge>
 
@@ -105,10 +107,21 @@ function Hero({ reduced }) {
   );
 }
 
+function SectionTitle({ children, count }) {
+  return (
+    <div className="section-head">
+      <h2 className="section-title">{children}</h2>
+      {count ? <span className="section-count">{count}</span> : null}
+    </div>
+  );
+}
+
 function Work() {
   return (
     <section className="work" id="work">
-      <h2 className="section-title">Selected Work</h2>
+      <SectionTitle count={String(PROJECTS.length).padStart(2, "0")}>
+        Work
+      </SectionTitle>
 
       <div className="cards">
         {PROJECTS.map((p) => (
@@ -119,26 +132,67 @@ function Work() {
             target="_blank"
             rel="noopener noreferrer"
           >
-            <span className="card-context">{p.context}</span>
+            <div className="card-top">
+              <span className="card-context">{p.context}</span>
+              <span className="card-arrow" aria-hidden="true">
+                ↗
+              </span>
+            </div>
+
             <h3 className="card-name">{p.name}</h3>
             <p className="card-blurb">{p.blurb}</p>
+
             <ul className="card-tech">
               {p.tech.map((t) => (
                 <li key={t}>{t}</li>
               ))}
             </ul>
+
+            <span className="card-repo">
+              {p.href.replace("https://github.com/", "github.com/")}
+            </span>
           </a>
         ))}
       </div>
+    </section>
+  );
+}
 
-      <a
-        className="work-more"
-        href={GITHUB}
-        target="_blank"
-        rel="noopener noreferrer"
-      >
-        All repositories on GitHub →
-      </a>
+function About() {
+  return (
+    <section className="about" id="about">
+      <SectionTitle>About</SectionTitle>
+
+      <div className="about-grid">
+        <div className="about-col">
+          <h3 className="col-title">Leadership</h3>
+          <ul className="roles">
+            {ROLES.map((r) => (
+              <li className="role" key={r.title + r.org}>
+                <span className="role-title">{r.title}</span>
+                <span className="role-meta">
+                  {r.org}
+                  {r.when ? ` · ${r.when}` : ""}
+                </span>
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        <div className="about-col">
+          <h3 className="col-title">Skills</h3>
+          {SKILLS.map((s) => (
+            <div className="skill-group" key={s.group}>
+              <span className="skill-label">{s.group}</span>
+              <ul className="skill-items">
+                {s.items.map((i) => (
+                  <li key={i}>{i}</li>
+                ))}
+              </ul>
+            </div>
+          ))}
+        </div>
+      </div>
     </section>
   );
 }
@@ -146,15 +200,29 @@ function Work() {
 function Contact() {
   return (
     <section className="contact" id="contact">
-      <h2 className="section-title">Contact</h2>
-      <p className="contact-line">
-        <a href={`mailto:${EMAIL}`}>{EMAIL}</a>
-      </p>
-      <p className="contact-line muted">
-        <a href={GITHUB} target="_blank" rel="noopener noreferrer">
-          github.com/BimsaraU
+      <SectionTitle>Contact</SectionTitle>
+
+      <div className="contact-grid">
+        <a className="contact-item" href={`mailto:${EMAIL}`}>
+          <span className="contact-label">Email</span>
+          <span className="contact-value">{EMAIL}</span>
         </a>
-      </p>
+
+        <a className="contact-item" href={`mailto:${EMAIL_UNI}`}>
+          <span className="contact-label">University</span>
+          <span className="contact-value">{EMAIL_UNI}</span>
+        </a>
+
+        <a
+          className="contact-item"
+          href={GITHUB}
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <span className="contact-label">GitHub</span>
+          <span className="contact-value">github.com/BimsaraU</span>
+        </a>
+      </div>
     </section>
   );
 }
@@ -194,11 +262,14 @@ export default function App() {
           <Hero reduced={reduced} />
           <Stats reduced={reduced} />
           <Work />
+          <About />
           <Contact />
         </main>
 
         <footer className="foot">
-          <span>© {new Date().getFullYear()} {NAME}</span>
+          <span>
+            {new Date().getFullYear()} {NAME}
+          </span>
           <span className="muted">University of Moratuwa</span>
         </footer>
       </div>
