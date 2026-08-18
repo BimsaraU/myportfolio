@@ -4,7 +4,7 @@
  * Counts derived by enumerating the CV sections:
  *   Projects   -> 6 entries, 6 distinct GitHub repos
  *   Experience -> 15 entries, of which 7 are lead / head / founder titles
- *   Academic   -> GPA 3.75, O/L 9A passes
+ *   Academic   -> GPA 3.73, O/L 9A passes
  */
 
 export const NAME = "Bimsara Udurawana";
@@ -20,6 +20,7 @@ export const STACK = ["Python", "C++", "VHDL", "JavaScript"];
 
 export const EMAIL = "bimsaraudurawana@gmail.com";
 export const EMAIL_UNI = "bimsarau.23@cse.mrt.ac.lk";
+export const PHONE = "0703371001";
 export const GITHUB = "https://github.com/BimsaraU";
 
 export const NAV = [
@@ -29,7 +30,7 @@ export const NAV = [
 ];
 
 export const STATS = [
-  { value: 3.75, decimals: 2, suffix: "", label: "Current GPA" },
+  { value: 3.73, decimals: 2, suffix: "", label: "Current GPA" },
   { value: 6, decimals: 0, suffix: "", label: "Projects" },
   { value: 7, decimals: 0, suffix: "", label: "Lead Roles" },
   { value: 9, decimals: 0, suffix: "A", label: "O/L Passes" },

@@ -10,6 +10,7 @@ import {
   NAV,
   EMAIL,
   EMAIL_UNI,
+  PHONE,
   GITHUB,
   PROJECTS,
   ROLES,
@@ -211,6 +212,11 @@ function Contact() {
         <a className="contact-item" href={`mailto:${EMAIL_UNI}`}>
           <span className="contact-label">University</span>
           <span className="contact-value">{EMAIL_UNI}</span>
+        </a>
+
+        <a className="contact-item" href={`tel:+94${PHONE.slice(1)}`}>
+          <span className="contact-label">Phone</span>
+          <span className="contact-value">{PHONE}</span>
         </a>
 
         <a
