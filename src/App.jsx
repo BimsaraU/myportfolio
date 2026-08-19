@@ -345,9 +345,6 @@ function Footer() {
         <span>{PHONES[0].value}</span>
         <span>{EMAILS[0].value}</span>
       </p>
-      <p className="footer-note">
-        Set in Inter. Built with React and Vite. No trackers.
-      </p>
     </footer>
   );
 }
