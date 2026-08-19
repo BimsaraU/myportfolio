@@ -1,21 +1,34 @@
 import { useEffect, useState } from "react";
-import Backdrop from "./components/Backdrop";
-import PlacedBadge from "./components/PlacedBadge";
+import Plate from "./components/Plate";
 import Stats from "./components/Stats";
+import ProjectCard from "./components/ProjectCard";
+import ProjectPanel from "./components/ProjectPanel";
+import PROJECTS from "./projects";
 import {
   NAME,
+  FULL_NAME,
+  INITIALS,
+  ROLE_LINE,
   TAGLINE,
   SUBHEAD,
-  STACK,
+  PROFILE,
   NAV,
-  EMAIL,
-  EMAIL_UNI,
-  PHONE,
   GITHUB,
-  PROJECTS,
-  ROLES,
+  GITHUB_HANDLE,
+  LOCATION,
+  ADDRESS,
+  CITIZENSHIP,
+  EMAILS,
+  PHONES,
+  EDUCATION,
   SKILLS,
+  ROLES,
+  ADDITIONAL_ROLES,
+  AFFILIATIONS,
+  REFERENCES,
 } from "./content";
+
+const CV_FILE = "/Bimsara-Udurawana-CV.pdf";
 
 function useReducedMotion() {
   const [reduced, setReduced] = useState(
@@ -34,164 +47,218 @@ function useReducedMotion() {
   return reduced;
 }
 
+/** Numbered rule + title. Every major section wears one. */
+function SectionHead({ num, title, note }) {
+  return (
+    <div className="sec-head swiss-dots">
+      <p className="overline">
+        <span className="overline-num">{num}.</span> {title}
+      </p>
+      {note ? <p className="sec-note">{note}</p> : null}
+    </div>
+  );
+}
+
 function Header({ open, setOpen }) {
   return (
-    <header className="header">
+    <header className="topbar">
       <a className="brand" href="#top" aria-label={`${NAME}, home`}>
-        <span className="brand-mark">BU</span>
+        <span className="brand-mark">{INITIALS}</span>
+        <span className="brand-name">{NAME}</span>
       </a>
 
       <nav className="nav" aria-label="Primary">
         {NAV.map((item) => (
           <a key={item.href} className="nav-link" href={item.href}>
-            {item.label}
+            <span className="nav-link-in">{item.label}</span>
+            <span className="nav-link-out" aria-hidden="true">
+              {item.label}
+            </span>
           </a>
         ))}
-        <a
-          className="nav-cta"
-          href={GITHUB}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          GitHub
+        <a className="btn btn--sm" href={CV_FILE} download>
+          CV / PDF
         </a>
       </nav>
 
       <button
-        className="burger"
         type="button"
-        aria-label={open ? "Close menu" : "Open menu"}
+        className="menu-toggle"
         aria-expanded={open}
+        aria-controls="menu"
         onClick={() => setOpen(!open)}
       >
-        <span />
-        <span />
+        {open ? "Close" : "Menu"}
       </button>
+
+      {open ? (
+        <div className="menu" id="menu">
+          {NAV.map((item) => (
+            <a key={item.href} href={item.href} onClick={() => setOpen(false)}>
+              {item.label}
+            </a>
+          ))}
+          <a href={CV_FILE} download onClick={() => setOpen(false)}>
+            CV / PDF
+          </a>
+        </div>
+      ) : null}
     </header>
   );
 }
 
-function Hero({ reduced }) {
+function Hero() {
   return (
     <section className="hero" id="top">
-      <PlacedBadge reduced={reduced}>
-        <a className="badge" href="#work">
-          <span className="badge-dot" aria-hidden="true" />
-          Open to internships, 2026
-        </a>
-      </PlacedBadge>
+      <div className="hero-main">
+        <p className="overline">
+          <span className="overline-num">00.</span> {ROLE_LINE}
+        </p>
 
-      <h1 className="headline">
-        <span className="hl-line">{NAME}</span>
-        <span className="hl-line hl-accent">{TAGLINE}</span>
-      </h1>
+        <h1 className="hero-name">
+          Bimsara
+          <br />
+          Udurawana
+        </h1>
 
-      <p className="subhead">{SUBHEAD}</p>
+        <p className="hero-tagline">{TAGLINE}</p>
+        <p className="hero-sub">{SUBHEAD}</p>
 
-      <div className="stack" aria-label="Core stack">
-        {STACK.map((s) => (
-          <span className="chip" key={s}>
-            {s}
-          </span>
-        ))}
+        <div className="hero-actions">
+          <a className="btn" href="#work">
+            See the work
+          </a>
+          <a className="btn btn--ghost" href="#contact">
+            Get in touch
+          </a>
+        </div>
       </div>
 
-      <div className="hero-actions">
-        <a className="btn btn-primary" href="#work">
-          View Work
-        </a>
-        <a className="btn btn-ghost" href={`mailto:${EMAIL}`}>
-          Get in touch
+      <aside className="hero-side swiss-grid-pattern">
+        <Plate seed="hero-01" className="hero-plate" />
+        <dl className="hero-facts">
+          <dt>Based</dt>
+          <dd>{LOCATION}</dd>
+          <dt>Field</dt>
+          <dd>Edge AI / RTL / Full Stack</dd>
+          <dt>Code</dt>
+          <dd>
+            <a href={GITHUB} target="_blank" rel="noopener noreferrer">
+              github.com/{GITHUB_HANDLE}
+            </a>
+          </dd>
+        </dl>
+      </aside>
+    </section>
+  );
+}
+
+function Work({ onOpen }) {
+  return (
+    <section className="section" id="work">
+      <SectionHead
+        num="01"
+        title="Work"
+        note={`${PROJECTS.length} projects on file`}
+      />
+      <div className="grid-work">
+        {PROJECTS.map((project, index) => (
+          <ProjectCard
+            key={project.slug}
+            project={project}
+            index={index}
+            onOpen={onOpen}
+          />
+        ))}
+
+        {/* Closes the last grid row rather than leaving it ragged. */}
+        <a className="card card--cta" href="#contact">
+          <span className="cta-plus" aria-hidden="true">
+            +
+          </span>
+          <span className="cta-text">
+            The next one
+            <br />
+            could be yours
+          </span>
+          <span className="card-open">Get in touch</span>
         </a>
       </div>
     </section>
   );
 }
 
-function SectionTitle({ children, count }) {
+function Skills() {
   return (
-    <div className="section-head">
-      <h2 className="section-title">{children}</h2>
-      {count ? <span className="section-count">{count}</span> : null}
-    </div>
-  );
-}
-
-function Work() {
-  return (
-    <section className="work" id="work">
-      <SectionTitle count={String(PROJECTS.length).padStart(2, "0")}>
-        Work
-      </SectionTitle>
-
-      <div className="cards">
-        {PROJECTS.map((p) => (
-          <a
-            className="card"
-            key={p.name}
-            href={p.href}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <div className="card-top">
-              <span className="card-context">{p.context}</span>
-              <span className="card-arrow" aria-hidden="true">
-                ↗
-              </span>
-            </div>
-
-            <h3 className="card-name">{p.name}</h3>
-            <p className="card-blurb">{p.blurb}</p>
-
-            <ul className="card-tech">
-              {p.tech.map((t) => (
-                <li key={t}>{t}</li>
+    <section className="section" id="skills">
+      <SectionHead num="02" title="Skills" note="Tools, methods, languages" />
+      <div className="grid-skills">
+        {SKILLS.map((group) => (
+          <div key={group.group} className="skill-block">
+            <h3 className="skill-title">{group.group}</h3>
+            <ul className="tags">
+              {group.items.map((item) => (
+                <li key={item} className="tag">
+                  {item}
+                </li>
               ))}
             </ul>
-
-            <span className="card-repo">
-              {p.href.replace("https://github.com/", "github.com/")}
-            </span>
-          </a>
+          </div>
         ))}
       </div>
     </section>
   );
 }
 
-function About() {
+function Record() {
   return (
-    <section className="about" id="about">
-      <SectionTitle>About</SectionTitle>
+    <section className="section" id="record">
+      <SectionHead num="03" title="Record" note="Education and leadership" />
 
-      <div className="about-grid">
-        <div className="about-col">
+      <div className="record-grid">
+        <div className="record-col">
+          <h3 className="col-title">Education</h3>
+          {EDUCATION.map((entry) => (
+            <article key={entry.title} className="entry">
+              <p className="entry-when">{entry.when}</p>
+              <h4 className="entry-title">{entry.title}</h4>
+              <p className="entry-org">{entry.org}</p>
+              {entry.note ? <p className="entry-note">{entry.note}</p> : null}
+              <ul className="entry-lines">
+                {entry.lines.map((line) => (
+                  <li key={line}>{line}</li>
+                ))}
+              </ul>
+            </article>
+          ))}
+
+          <h3 className="col-title">Profile</h3>
+          <p className="prose">{PROFILE}</p>
+        </div>
+
+        <div className="record-col record-col--roles swiss-diagonal">
           <h3 className="col-title">Leadership</h3>
           <ul className="roles">
-            {ROLES.map((r) => (
-              <li className="role" key={r.title + r.org}>
-                <span className="role-title">{r.title}</span>
-                <span className="role-meta">
-                  {r.org}
-                  {r.when ? ` · ${r.when}` : ""}
-                </span>
+            {ROLES.map((role) => (
+              <li key={`${role.title}-${role.org}`} className="role">
+                <span className="role-when">{role.when}</span>
+                <span className="role-title">{role.title}</span>
+                <span className="role-org">{role.org}</span>
               </li>
             ))}
           </ul>
-        </div>
 
-        <div className="about-col">
-          <h3 className="col-title">Skills</h3>
-          {SKILLS.map((s) => (
-            <div className="skill-group" key={s.group}>
-              <span className="skill-label">{s.group}</span>
-              <ul className="skill-items">
-                {s.items.map((i) => (
-                  <li key={i}>{i}</li>
-                ))}
-              </ul>
-            </div>
-          ))}
+          <h3 className="col-title">Also</h3>
+          <p className="prose prose--sm">{ADDITIONAL_ROLES}</p>
+
+          <h3 className="col-title">Affiliations</h3>
+          <ul className="tags">
+            {AFFILIATIONS.map((item) => (
+              <li key={item} className="tag">
+                {item}
+              </li>
+            ))}
+          </ul>
         </div>
       </div>
     </section>
@@ -200,85 +267,132 @@ function About() {
 
 function Contact() {
   return (
-    <section className="contact" id="contact">
-      <SectionTitle>Contact</SectionTitle>
+    <section className="section section--contact" id="contact">
+      <SectionHead num="04" title="Contact" note="All lines are live" />
 
       <div className="contact-grid">
-        <a className="contact-item" href={`mailto:${EMAIL}`}>
-          <span className="contact-label">Email</span>
-          <span className="contact-value">{EMAIL}</span>
-        </a>
+        <div className="contact-lead">
+          <h2 className="contact-shout">
+            Let&rsquo;s
+            <br />
+            build it.
+          </h2>
+          <a className="btn btn--accent" href={`mailto:${EMAILS[0].value}`}>
+            Email me
+          </a>
+        </div>
 
-        <a className="contact-item" href={`mailto:${EMAIL_UNI}`}>
-          <span className="contact-label">University</span>
-          <span className="contact-value">{EMAIL_UNI}</span>
-        </a>
+        <div className="contact-block">
+          <h3 className="col-title">Email</h3>
+          <ul className="lines">
+            {EMAILS.map((item) => (
+              <li key={item.value} className="line">
+                <span className="line-label">{item.label}</span>
+                <a className="line-value" href={`mailto:${item.value}`}>
+                  {item.value}
+                </a>
+              </li>
+            ))}
+          </ul>
 
-        <a className="contact-item" href={`tel:+94${PHONE.slice(1)}`}>
-          <span className="contact-label">Phone</span>
-          <span className="contact-value">{PHONE}</span>
-        </a>
+          <h3 className="col-title">Phone</h3>
+          <ul className="lines">
+            {PHONES.map((item) => (
+              <li key={item.tel} className="line">
+                <span className="line-label">{item.label}</span>
+                <a className="line-value" href={`tel:${item.tel}`}>
+                  {item.value}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </div>
 
-        <a
-          className="contact-item"
-          href={GITHUB}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <span className="contact-label">GitHub</span>
-          <span className="contact-value">github.com/BimsaraU</span>
-        </a>
+        <div className="contact-block">
+          <h3 className="col-title">Elsewhere</h3>
+          <ul className="lines">
+            <li className="line">
+              <span className="line-label">GitHub</span>
+              <a
+                className="line-value"
+                href={GITHUB}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                github.com/{GITHUB_HANDLE}
+              </a>
+            </li>
+            <li className="line">
+              <span className="line-label">Address</span>
+              <span className="line-value">{ADDRESS}</span>
+            </li>
+            <li className="line">
+              <span className="line-label">Citizenship</span>
+              <span className="line-value">{CITIZENSHIP}</span>
+            </li>
+          </ul>
+
+          <h3 className="col-title">Reference</h3>
+          <ul className="lines">
+            {REFERENCES.map((ref) => (
+              <li key={ref.email} className="line">
+                <span className="line-label">{ref.name}</span>
+                <span className="line-value">{ref.org}</span>
+                <a className="line-value" href={`mailto:${ref.email}`}>
+                  {ref.email}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </div>
       </div>
     </section>
+  );
+}
+
+function Footer() {
+  return (
+    <footer className="footer">
+      <p className="footer-name">{FULL_NAME}</p>
+      <p className="footer-meta">
+        <span>{LOCATION}</span>
+        <span>{PHONES[0].value}</span>
+        <span>{EMAILS[0].value}</span>
+      </p>
+      <p className="footer-note">
+        Set in Inter. Built with React and Vite. No trackers.
+      </p>
+    </footer>
   );
 }
 
 export default function App() {
   const reduced = useReducedMotion();
   const [open, setOpen] = useState(false);
-
-  useEffect(() => {
-    document.body.classList.toggle("menu-open", open);
-    const onKey = (e) => e.key === "Escape" && setOpen(false);
-    document.addEventListener("keydown", onKey);
-    return () => document.removeEventListener("keydown", onKey);
-  }, [open]);
+  const [active, setActive] = useState(null);
 
   return (
     <>
-      <Backdrop reduced={reduced} />
+      <a className="skip" href="#work">
+        Skip to work
+      </a>
 
-      <div className="page">
-        <Header open={open} setOpen={setOpen} />
+      <Header open={open} setOpen={setOpen} />
 
-        {open && (
-          <div className="sheet" onClick={() => setOpen(false)}>
-            {NAV.map((item) => (
-              <a key={item.href} href={item.href}>
-                {item.label}
-              </a>
-            ))}
-            <a href={GITHUB} target="_blank" rel="noopener noreferrer">
-              GitHub
-            </a>
-          </div>
-        )}
+      <main>
+        <Hero />
+        <Stats reduced={reduced} />
+        <Work onOpen={setActive} />
+        <Skills />
+        <Record />
+        <Contact />
+      </main>
 
-        <main>
-          <Hero reduced={reduced} />
-          <Stats reduced={reduced} />
-          <Work />
-          <About />
-          <Contact />
-        </main>
+      <Footer />
 
-        <footer className="foot">
-          <span>
-            {new Date().getFullYear()} {NAME}
-          </span>
-          <span className="muted">University of Moratuwa</span>
-        </footer>
-      </div>
+      {active ? (
+        <ProjectPanel project={active} onClose={() => setActive(null)} />
+      ) : null}
     </>
   );
 }

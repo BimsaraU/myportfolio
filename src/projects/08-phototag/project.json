@@ -1,0 +1,19 @@
+{
+  "name": "PhotoTag",
+  "header": "GPU-Accelerated Batch Image Processor",
+  "year": "2026",
+  "role": "Solo",
+  "blurb": "Windows application for watermarking and tagging large image batches in a single pass. Drop in a folder, place the watermark once, export the whole set.",
+  "detail": "Detects each image's orientation and adapts watermark placement and grid alignment accordingly, so mixed portrait and landscape sets process correctly without manual intervention, with user-configurable position, scale and opacity controls.\n\nUses DirectX 11 GPU-accelerated rendering for responsive live preview of the full batch, GDI+ for image decoding and encoding, and a Dear ImGui interface for immediate-mode controls. No runtime dependencies.",
+  "tech": [
+    "C++",
+    "DirectX 11",
+    "GDI+",
+    "Dear ImGui",
+    "Windows API",
+    "GPU Rendering"
+  ],
+  "links": [
+    { "label": "Repository", "href": "https://github.com/BimsaraU/PhotoTag" }
+  ]
+}

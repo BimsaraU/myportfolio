@@ -1,0 +1,23 @@
+{
+  "name": "SkyNest",
+  "header": "Hotel Management System",
+  "year": "2025",
+  "role": "Full Stack",
+  "blurb": "Full-stack hotel management platform covering the booking lifecycle: inventory and availability search, reservations with date-overlap validation, guest records, check-in/out and billing.",
+  "detail": "Normalised PostgreSQL schema with referential integrity and indexed availability queries behind server-side API routes. Responsive Next.js + TypeScript frontend with server-side rendering and role-separated admin and guest views. Dockerised and deployed on Vercel.",
+  "tech": [
+    "TypeScript",
+    "Next.js",
+    "React",
+    "PostgreSQL",
+    "SQL",
+    "Docker",
+    "REST APIs",
+    "Server-Side Rendering",
+    "Vercel"
+  ],
+  "links": [
+    { "label": "Live Site", "href": "https://sky-nest.vercel.app/" },
+    { "label": "Repository", "href": "https://github.com/BimsaraU/SkyNest" }
+  ]
+}

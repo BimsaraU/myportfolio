@@ -1,84 +1,81 @@
 import { useEffect, useRef, useState } from "react";
 import { STATS } from "../content";
 
-function useCountUp(target, decimals, delay, duration, reduced) {
-  const [value, setValue] = useState(reduced ? target : 0);
-  const ref = useRef(null);
+/**
+ * Counts each figure up once, the first time the block scrolls into view.
+ * Mechanical and short — 900ms linear-ish, no easing bounce.
+ * Reduced motion gets the final number immediately.
+ */
+function useCountUp(target, run) {
+  const [value, setValue] = useState(run ? 0 : target);
 
   useEffect(() => {
-    if (reduced) {
+    if (!run) {
       setValue(target);
       return;
     }
 
-    const el = ref.current;
-    if (!el) return;
+    const duration = 900;
+    const start = performance.now();
+    let frame;
 
-    let raf = 0;
-    let timer = 0;
-    let done = false;
-
-    const io = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (!entry.isIntersecting || done) return;
-          done = true;
-          io.unobserve(entry.target);
-
-          timer = window.setTimeout(() => {
-            let start = 0;
-            const step = (now) => {
-              if (!start) start = now;
-              const p = Math.min((now - start) / duration, 1);
-              const eased = 1 - Math.pow(1 - p, 3); // easeOutCubic
-              setValue(target * eased);
-              if (p < 1) raf = requestAnimationFrame(step);
-            };
-            raf = requestAnimationFrame(step);
-          }, delay);
-        });
-      },
-      { threshold: 0.25 }
-    );
-
-    io.observe(el);
-
-    return () => {
-      io.disconnect();
-      cancelAnimationFrame(raf);
-      clearTimeout(timer);
+    const step = (now) => {
+      const t = Math.min(1, (now - start) / duration);
+      // Fast start, hard stop. No overshoot.
+      setValue(target * (1 - Math.pow(1 - t, 3)));
+      if (t < 1) frame = requestAnimationFrame(step);
     };
-  }, [target, delay, duration, reduced]);
 
-  return [value.toFixed(decimals), ref];
+    frame = requestAnimationFrame(step);
+    return () => cancelAnimationFrame(frame);
+  }, [target, run]);
+
+  return value;
 }
 
-function Stat({ stat, index, reduced }) {
-  const [display, ref] = useCountUp(
-    stat.value,
-    stat.decimals,
-    420 + index * 90,
-    1400 + index * 80,
-    reduced
-  );
+function Stat({ stat, run }) {
+  const value = useCountUp(stat.value, run);
 
   return (
-    <div className="stat" ref={ref} style={{ "--d": `${0.5 + index * 0.08}s` }}>
+    <li className="stat">
       <span className="stat-value">
-        {display}
+        {value.toFixed(stat.decimals)}
         {stat.suffix}
       </span>
       <span className="stat-label">{stat.label}</span>
-    </div>
+      <span className="stat-plus" aria-hidden="true">
+        +
+      </span>
+    </li>
   );
 }
 
 export default function Stats({ reduced }) {
+  const ref = useRef(null);
+  const [seen, setSeen] = useState(false);
+
+  useEffect(() => {
+    if (reduced || seen || !ref.current) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setSeen(true);
+          observer.disconnect();
+        }
+      },
+      { threshold: 0.35 }
+    );
+
+    observer.observe(ref.current);
+    return () => observer.disconnect();
+  }, [reduced, seen]);
+
   return (
-    <div className="stats">
-      {STATS.map((stat, i) => (
-        <Stat key={stat.label} stat={stat} index={i} reduced={reduced} />
+    <ul className="stats" ref={ref}>
+      {STATS.map((stat) => (
+        <Stat key={stat.label} stat={stat} run={!reduced && seen} />
       ))}
-    </div>
+    </ul>
   );
 }

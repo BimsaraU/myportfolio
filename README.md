@@ -1,7 +1,8 @@
-# Portfolio, Bimsara Udurawana
+# Curriculum Vitae, Bimsara Udurawana
 
-React and Vite. Dark, fully generated backdrop: no video, no image assets, no
-external media of any kind. Deploys to Vercel as a static build.
+React and Vite, deployed to Vercel as a static build. Designed in the
+International Typographic Style: black, white, one red, a visible grid, no
+shadows, no rounded corners, no gradients.
 
 ## Run
 
@@ -29,85 +30,95 @@ npx vercel
 `vercel.json` pins the framework preset, build command and output directory,
 and sets immutable caching on hashed assets.
 
+## Adding a project
+
+Drop a folder into `src/projects/` with your photos and a `project.json`. It
+appears on the site on the next build — no imports, no registry, no code
+change. Full contract in [src/projects/README.md](src/projects/README.md).
+
+```
+src/projects/
+  10-my-new-thing/
+    project.json      name, header, blurb, tech, links
+    cover.jpg         card image
+    01-detail.jpg     extra photos for the detail panel
+```
+
+A folder with only photos in it also works: the folder name becomes the
+project name and the first photo becomes the cover. A folder with no photos
+falls back to a generated Bauhaus plate, keyed off the folder name so it stays
+the same across builds.
+
 ## Structure
 
 ```
-index.html                     shell, font links, capability probe
-src/main.jsx                   entry
-src/App.jsx                    header, hero, work, about, contact
-src/content.js                 all copy and numbers, single source of truth
-src/styles.css                 tokens and layout
-src/components/Backdrop.jsx    generated dark backdrop (canvas)
-src/components/PlacedBadge.jsx DOM in canvas hero element
-src/components/Stats.jsx       count up metrics
+index.html                       shell, Inter, favicon, meta
+public/Bimsara-Udurawana-CV.pdf  the downloadable CV
+src/main.jsx                     entry
+src/App.jsx                      topbar, hero, stats, work, skills, record, contact
+src/content.js                   all CV copy: contacts, skills, education, roles
+src/projects/index.js            zero-config folder loader (import.meta.glob)
+src/projects/<slug>/             one folder per project — photos + project.json
+src/styles.css                   design tokens, patterns, every component
+src/components/Plate.jsx         deterministic geometric plate
+src/components/Stats.jsx         count-up metrics
+src/components/ProjectCard.jsx   work grid card
+src/components/ProjectPanel.jsx  project detail dialog
 ```
 
-## Typography
+## Design tokens
 
-Three faces, each with one job:
+Defined once at the top of `src/styles.css`.
 
-- **BubbledotICG-FinePos**, the retro dot matrix display face, used only for
-  the hero headline, the section titles and the brand mark. It is wide and
-  geometric, so it gets tighter tracking and a lower size ceiling than a sans
-  would need.
-- **Inter** for all body copy, cards and navigation.
-- **JetBrains Mono** for figures, tech tags and repository paths.
+| Token       | Value     | Role                                 |
+| ----------- | --------- | ------------------------------------ |
+| `--bg`      | `#FFFFFF` | canvas                               |
+| `--fg`      | `#000000` | text, borders, inverted surfaces     |
+| `--muted`   | `#F2F2F2` | secondary surfaces, section headers  |
+| `--accent`  | `#FF3000` | the only signal colour               |
+| `--border`  | `4px`     | structural rules between sections    |
+| `--snap`    | `150ms`   | colour changes, instant feedback     |
 
-Body text never uses the pixel face. An earlier draft set the stat glyphs in
-it and they were unreadable at small sizes.
-
-## The backdrop
-
-`Backdrop.jsx` draws everything at runtime: a deep vertical gradient, a
-deterministic starfield, three parallaxing summed sine ridges, a horizon glow,
-a bottom fade and a grain tile to hide banding.
-
-The starfield is seeded from a sine hash, so it looks identical on every load.
-Ridges drift with the pointer and with time. Both stop under
-`prefers-reduced-motion: reduce`, which renders a single static frame.
-
-## DOM in canvas
-
-`PlacedBadge.jsx` uses Chrome's experimental Canvas 2D `placeElement()` API.
-The status badge is real DOM, clickable and readable by screen readers, and it
-is rasterised into a canvas each frame so the canvas can paint a ring behind
-it that stacked DOM could not composite.
-
-Enable it at `chrome://flags/#enable-experimental-web-platform-features`.
-
-Constraints the implementation respects:
-
-- one `placeElement` call per element per frame
-- translate only, because rotating or non-uniformly scaling a placed element
-  breaks its native hit testing
-- the badge stays laid out and in the document (`opacity: 0`, never
-  `display: none`) because the API requires it
-- any throw inside the loop removes the canvas and restores the plain badge
-- the loop pauses when the tab is hidden
-
-The API is not yet in stable Chrome, so almost every visitor gets the fallback
-path. A CSS ring stands in for the canvas one, which is why the effect is
-visible at all today.
+Textures are CSS-generated: a 24px grid (`.swiss-grid-pattern`), a 16px dot
+matrix (`.swiss-dots`), 45° hatching (`.swiss-diagonal`), and a fractal-noise
+paper grain on `body::before`. Never on black or red surfaces.
 
 ## Content
 
-Every string and number in `src/content.js` comes from CVv3.
+Every string in `src/content.js` comes from `CV-new.tex`, the long-form CV.
+Projects live in their own folders instead, so the CV copy and the project
+record stay separate.
 
-| Metric | Value | Source |
-|---|---|---|
-| Current GPA | 3.75 | stated in the CV |
-| Projects | 6 | 6 entries in Projects, 6 distinct repositories |
-| Lead Roles | 7 | Asst. Director, OC Lead, Asst. Pillar Head, OC Co-Lead x2, Co-Founder and Head of Design, President |
-| O/L Passes | 9A | stated in the CV |
+Contact lines, all live:
 
-All six projects are listed with their repositories:
+| Line      | Value                       |
+| --------- | --------------------------- |
+| Primary   | +94 70 337 1001             |
+| Backup    | +94 72 337 1001             |
+| Emergency | +94 71 847 1001             |
+| Personal  | bimsaraudurawana@gmail.com  |
+| University| bimsarau.23@cse.mrt.ac.lk   |
 
-- [DVCon Sitting Ducks](https://github.com/BimsaraU/DVCon-SittingDucks)
-- [Smart Campus Digital Twin](https://github.com/Smart-Campus-Digital-Twin)
-- [DS Research Tourism](https://github.com/rathishTharusha/DS-research-Tourism)
-- [PhotoTag](https://github.com/BimsaraU/PhotoTag)
-- [SkyNest](https://github.com/BimsaraU/SkyNest)
+## Projects on file
+
+- [DVCon VEGA-FPGA Accelerator](https://github.com/TharakaUJ/DVcon-accelerator) · [detection side](https://github.com/BimsaraU/DVCon-SittingDucks)
+- [Smart Campus Digital Twin](https://github.com/Smart-Campus-Digital-Twin/Smart-Campus-Digital-Twin-v4)
+- [TourSL](https://github.com/BimsaraU/toursl-landing-page) · [live](https://toursl-landing-page.vercel.app/)
+- [RPAL Interpreter](https://github.com/BimsaraU/RPAL-interpreter)
+- [Wallow](https://github.com/BimsaraU/Wallow)
 - [Nano Processor](https://github.com/BimsaraU/Nanoprocessor-Design-Project)
+- [Tourism Arrivals Forecasting](https://github.com/rathishTharusha/DS-research-Tourism)
+- [PhotoTag](https://github.com/BimsaraU/PhotoTag)
+- [SkyNest](https://github.com/BimsaraU/SkyNest) · [live](https://sky-nest.vercel.app/)
 
-The Experience section lists 15 roles in total. Seven of them are lead, head,
-founder or president titles, which is what the Lead Roles figure counts.
+## Accessibility
+
+- Black on white is 21:1. Red is used for accents and large type, never for
+  small body copy on white.
+- Focus is a 2px red outline, offset — never removed.
+- Touch targets are at least 44px.
+- The project dialog closes on Escape, takes focus on open and locks the page
+  behind it.
+- All motion is CSS transition based and respects
+  `prefers-reduced-motion: reduce`.
+- A print stylesheet drops the chrome so the page prints as a document.

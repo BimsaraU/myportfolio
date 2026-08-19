@@ -1,0 +1,37 @@
+{
+  "name": "Edge-Optimized Task-Driven Detection",
+  "header": "DVCon 2026 / Accelerator Track",
+  "year": "2026",
+  "role": "RTL Design & Verification",
+  "featured": true,
+  "blurb": "Hardware/software co-designed zero-shot detection SoC on a Digilent Genesys 2 (Kintex-7) with a C-DAC VEGA RV32 RISC-V host. INT8 convolution accelerator in SystemVerilog, verified bit-exact on real silicon.",
+  "detail": "Built an INT8 convolution accelerator in SystemVerilog — a 16x32 MAC tile packing 512 MACs into 256 DSP48E1 slices via 2-MAC packing, a vector unit for bias, requantisation and activation, and an elaboration-time SiLU ROM. Exposed as an AXI4 peripheral with an AXI4-Lite control slave, AXI4 burst masters to DDR3 and a descriptor-chained GEMM controller, so the VEGA host issues one kick per inference.\n\nAdded semantic pre-filtering: Model2Vec runs on VEGA in parallel with convolution, cosine-matching prompt embeddings against 80 COCO class embeddings to rank classes and score detections as conf/(rank+1), with an early-exit policy halting on the first valid detection. MiniLM (22.7M params) hit 93.1% top-1 and 100% top-3 intent resolution at 10.3 ms against a 195 ms budget, beating MobileCLIP2-B at 72.4% and 55.0 ms.\n\nExplored a Sea of PEs 8x8 array, a Winograd fast-convolution prototype, and a multi-cluster systolic TPU variant — a 2x2 mesh of 16x16 arrays hitting 409 GOPS at 200 MHz with a 64-lane vector unit, 2D strided DMA and an XY-routed NoC.\n\nVerified on real hardware: an 8x8 port (64 DSP48E1 PEs, 71% utilisation) under a hard 90-DSP Basys 3 budget was synthesised, placed, routed and run on-board at 100 MHz with WNS +0.287 ns, bit-exact against a NumPy golden model across 8/8 randomised trials plus edge cases. Authored the BRAM/DSP/im2col verification regression in Vivado xsim, QuestaSim and cocotb.",
+  "tech": [
+    "SystemVerilog",
+    "Verilog",
+    "RISC-V (C-DAC VEGA)",
+    "AXI4 / AXI4-Lite",
+    "Xilinx Vivado",
+    "QuestaSim",
+    "cocotb",
+    "Kintex-7",
+    "DSP48E1",
+    "INT8 Quantisation",
+    "Systolic Arrays",
+    "NoC",
+    "YOLO26n",
+    "Model2Vec",
+    "PyTorch",
+    "ONNX"
+  ],
+  "links": [
+    {
+      "label": "Accelerator Repo",
+      "href": "https://github.com/TharakaUJ/DVcon-accelerator"
+    },
+    {
+      "label": "Detection Repo",
+      "href": "https://github.com/BimsaraU/DVCon-SittingDucks"
+    }
+  ]
+}

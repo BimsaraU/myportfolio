@@ -1,0 +1,37 @@
+{
+  "name": "Smart Campus Digital Twin",
+  "header": "Cloud-Native IoT & ML Platform",
+  "year": "2026",
+  "role": "Platform & ML Services",
+  "featured": true,
+  "blurb": "Real-time 3D digital twin of the University of Moratuwa campus, built as a microservices platform on Kubernetes with an MQTT to Kafka telemetry pipeline and ML forecasting services.",
+  "detail": "Sensor telemetry flows from MQTT (Mosquitto) through a validating ingest bridge into Apache Kafka, then fans out to a consumer writing time-series into InfluxDB with Flux downsampling tasks and relational state into PostgreSQL, with Redis caching and Alembic-managed migrations.\n\nA FastAPI service exposes REST and WebSocket endpoints behind a Kong API gateway with Keycloak OIDC authentication. The Next.js 16 / React 19 frontend renders an interactive 3D campus in Three.js via react-three-fiber alongside live Recharts dashboards.\n\nML services forecast energy, library and canteen occupancy and detect sensor anomalies, with MLflow tracking experiments and a scheduled retraining daemon refreshing models automatically. A configurable simulator with anomaly injection drives load testing. Deployed GitOps-style via ArgoCD with Kustomize manifests, GitHub Actions CI/CD, and Prometheus + Grafana observability.",
+  "tech": [
+    "Python",
+    "FastAPI",
+    "TypeScript",
+    "Next.js",
+    "React",
+    "Three.js",
+    "Kubernetes",
+    "Docker",
+    "ArgoCD",
+    "Kustomize",
+    "Apache Kafka",
+    "MQTT",
+    "InfluxDB",
+    "PostgreSQL",
+    "Redis",
+    "Kong",
+    "Keycloak",
+    "MLflow",
+    "Prometheus",
+    "Grafana"
+  ],
+  "links": [
+    {
+      "label": "Repository",
+      "href": "https://github.com/Smart-Campus-Digital-Twin/Smart-Campus-Digital-Twin-v4"
+    }
+  ]
+}

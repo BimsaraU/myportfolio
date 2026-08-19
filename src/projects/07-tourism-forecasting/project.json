@@ -1,0 +1,23 @@
+{
+  "name": "Tourism Arrivals Forecasting",
+  "header": "Data Science Research",
+  "year": "2025",
+  "role": "Research & Modelling",
+  "blurb": "Machine-learning research predicting weekly international tourist arrivals to Sri Lanka from public search-intent signals — testing whether search behaviour leads booking behaviour.",
+  "detail": "Aligned noisy weekly search-volume series against official arrival statistics, ran cross-correlation analysis at varying lags to identify the predictive window, engineered lagged and rolling features, and evaluated regression models against seasonal baselines — giving tourism operators a forecast signal weeks ahead of conventional reporting.",
+  "tech": [
+    "Python",
+    "scikit-learn",
+    "Pandas",
+    "NumPy",
+    "Time-Series Analysis",
+    "Feature Engineering",
+    "Statistical Modelling"
+  ],
+  "links": [
+    {
+      "label": "Repository",
+      "href": "https://github.com/rathishTharusha/DS-research-Tourism"
+    }
+  ]
+}
