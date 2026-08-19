@@ -1,6 +1,6 @@
 /**
  * Single source of truth for every string on the site.
- * Sourced from CV-new.tex (the long-form CV) — nothing invented.
+ * Sourced from CV-new.tex (the long-form CV). Nothing invented.
  *
  * Projects are NOT here: they live as folders under src/projects/.
  * See src/projects/README.md for how to add one.
@@ -17,7 +17,7 @@ export const ROLE_LINE =
 export const TAGLINE = "Silicon to Screen";
 
 export const SUBHEAD =
-  "I build edge AI systems, FPGA accelerators and full-stack platforms — " +
+  "I build edge AI systems, FPGA accelerators and full-stack platforms, " +
   "from the models down to the metal underneath. Computer vision, " +
   "time-series forecasting and RTL design verification, shipped and " +
   "measured on real hardware.";
@@ -63,38 +63,29 @@ export const NAV = [
   { label: "Contact", href: "#contact" },
 ];
 
-/* ------------------------------------------------------------------ stats */
-
-export const STATS = [
-  { value: 3.73, decimals: 2, suffix: "", label: "CGPA / 4.00" },
-  { value: 9, decimals: 0, suffix: "", label: "Shipped Projects" },
-  { value: 8, decimals: 0, suffix: "", label: "Lead Roles" },
-  { value: 409, decimals: 0, suffix: " GOPS", label: "Accelerator Peak" },
-];
-
 /* -------------------------------------------------------------- education */
 
 export const EDUCATION = [
   {
-    title: "B.Sc. (Hons) in Engineering — Computer Science & Engineering",
+    title: "B.Sc. (Hons) in Engineering in Computer Science & Engineering",
     org: "University of Moratuwa, Sri Lanka",
-    when: "2024 — Present",
+    when: "2024 - Present",
     note: "Specialisation: Data Science & Engineering",
     lines: [
       "Current CGPA 3.73 / 4.00",
-      "Semester GPAs — S1 4.00, S2 3.59, S3 3.71, S4 3.70",
+      "Semester GPAs: S1 4.00, S2 3.59, S3 3.71, S4 3.70",
       "Coursework: Computer Architecture, Digital System Design, Data Structures & Algorithms, Machine Learning, Database Systems, Operating Systems, Data Science",
     ],
   },
   {
-    title: "G.C.E. Advanced Level — Physical Science Stream",
+    title: "G.C.E. Advanced Level, Physical Science Stream",
     org: "St. Anthony's College, Kandy",
     when: "2023",
     note: "3 A passes",
     lines: [
       "Combined Mathematics A, Physics A, Chemistry A",
-      "General English — A pass",
-      "G.C.E. Ordinary Level — 9 A passes",
+      "General English: A pass",
+      "G.C.E. Ordinary Level: 9 A passes",
     ],
   },
 ];
@@ -255,7 +246,7 @@ export const SKILLS = [
   },
   {
     group: "Languages",
-    items: ["English — Fluent", "Sinhala — Native"],
+    items: ["English (Fluent)", "Sinhala (Native)"],
   },
 ];
 
@@ -265,27 +256,27 @@ export const ROLES = [
   {
     title: "Director, Digital Media",
     org: "CSESS, University of Moratuwa",
-    when: "Mar 2026 — Present",
+    when: "Mar 2026 - Present",
   },
   {
     title: "Assistant Director, Digital Media",
     org: "CSESS, University of Moratuwa",
-    when: "Aug 2025 — Mar 2026",
+    when: "Aug 2025 - Mar 2026",
   },
   {
     title: "Organizing Committee Lead",
     org: "Cybercon 2026",
-    when: "Mar 2026 — Present",
+    when: "Mar 2026 - Present",
   },
   {
     title: "Assistant Pillar Head, Creative Design",
     org: "MoraSpirit",
-    when: "Mar 2025 — Mar 2026",
+    when: "Mar 2025 - Mar 2026",
   },
   {
     title: "OC Co-Lead, Design Team",
     org: "IESL Robogames 2026",
-    when: "Dec 2025 — Apr 2026",
+    when: "Dec 2025 - Apr 2026",
   },
   {
     title: "OC Co-Lead, Design Committee",
@@ -295,22 +286,22 @@ export const ROLES = [
   {
     title: "Co-Founder & Head of Design",
     org: "ZerotoHero",
-    when: "2023 — Present",
+    when: "2023 - Present",
   },
   {
     title: "President, Astronomical Society",
     org: "St. Anthony's College, Kandy",
-    when: "2022 — 2023",
+    when: "2022 - 2023",
   },
 ];
 
 export const ADDITIONAL_ROLES =
-  "Team Member, CS40 Core Marketing — University of Moratuwa (Feb 2025 — " +
-  "Present); Team Member, MarCom IGV & B2B Showcasing MST — AIESEC in " +
-  "Colombo South (Feb 2025 — Aug 2025); Organizing Committee Member, " +
-  "Design Team — MoraForesight, Sakura; Organizing Committee Member, " +
-  "Marketing Team — SpiritX by MoraSpirit360, Woof Roof, Cricket Fiesta; " +
-  "Pillar Member, Creative Design Pillar — MoraSpirit.";
+  "Team Member, CS40 Core Marketing, University of Moratuwa (Feb 2025 - " +
+  "Present); Team Member, MarCom IGV & B2B Showcasing MST, AIESEC in " +
+  "Colombo South (Feb 2025 - Aug 2025); Organizing Committee Member, " +
+  "Design Team: MoraForesight, Sakura; Organizing Committee Member, " +
+  "Marketing Team: SpiritX by MoraSpirit360, Woof Roof, Cricket Fiesta; " +
+  "Pillar Member, Creative Design Pillar: MoraSpirit.";
 
 export const AFFILIATIONS = [
   "IEEE Student Branch, University of Moratuwa",
@@ -323,7 +314,18 @@ export const AFFILIATIONS = [
 export const REFERENCES = [
   {
     name: "Prof. Dulani Meedeniya",
-    org: "Department of Computer Science and Engineering, University of Moratuwa",
+    title: "Professor",
+    org: "Dept. of Computer Science & Engineering, University of Moratuwa",
     email: "dulanim@cse.mrt.ac.lk",
+    phone: "+94 71 393 5801",
+    tel: "+94713935801",
+  },
+  {
+    name: "Dr. Chathuranga Hettiarachchi",
+    title: "Senior Lecturer",
+    org: "Dept. of Computer Science & Engineering, University of Moratuwa",
+    email: "chathuranga@cse.mrt.ac.lk",
+    phone: "+94 70 406 7543",
+    tel: "+94704067543",
   },
 ];

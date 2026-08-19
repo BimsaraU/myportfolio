@@ -1,5 +1,5 @@
 /* ==========================================================================
-   Bimsara Udurawana — curriculum vitae
+   Bimsara Udurawana, curriculum vitae
    International Typographic Style: black, white, one red, a visible grid.
    No shadows, no radii, no gradients. Depth comes from pattern and weight.
    ========================================================================== */
@@ -111,7 +111,7 @@ button {
 
 /* ------------------------------------------------------------- textures */
 
-/* Paper grain over the whole page — the only thing that softens the white. */
+/* Paper grain over the whole page, the only thing that softens the white. */
 body::before {
   content: "";
   position: fixed;
@@ -443,67 +443,6 @@ body::before {
 
 .hero-facts a:hover {
   color: var(--accent);
-}
-
-/* ------------------------------------------------------------------ stats */
-
-.stats {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  border-bottom: var(--border) solid var(--line);
-}
-
-.stat {
-  position: relative;
-  padding: clamp(28px, 4vw, 48px) 24px;
-  border-right: var(--border-thin) solid var(--line);
-  background: var(--bg);
-  transition: background var(--snap), color var(--snap);
-}
-
-.stat:last-child {
-  border-right: 0;
-}
-
-.stat:hover {
-  background: var(--accent);
-  color: var(--bg);
-}
-
-.stat-value {
-  display: block;
-  font-size: clamp(36px, 5vw, 72px);
-  font-weight: 900;
-  letter-spacing: -0.04em;
-  line-height: 1;
-  transition: transform var(--out);
-  transform-origin: left bottom;
-}
-
-.stat:hover .stat-value {
-  transform: scale(1.05);
-}
-
-.stat-label {
-  display: block;
-  margin-top: 12px;
-  font-size: 11px;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.16em;
-}
-
-.stat-plus {
-  position: absolute;
-  top: 16px;
-  right: 16px;
-  font-size: 18px;
-  font-weight: 900;
-  transition: transform var(--out);
-}
-
-.stat:hover .stat-plus {
-  transform: rotate(90deg);
 }
 
 /* --------------------------------------------------------------- sections */
@@ -1080,6 +1019,11 @@ body::before {
   color: var(--accent);
 }
 
+.line-sub {
+  font-size: 13px;
+  font-weight: 500;
+}
+
 .line-value {
   font-size: 15px;
   font-weight: 700;
@@ -1178,18 +1122,6 @@ a.line-value:hover {
 
   .hero-facts {
     padding: 28px var(--pad);
-  }
-
-  .stats {
-    grid-template-columns: repeat(2, 1fr);
-  }
-
-  .stat:nth-child(2n) {
-    border-right: 0;
-  }
-
-  .stat:nth-child(-n + 2) {
-    border-bottom: var(--border-thin) solid var(--line);
   }
 
   .panel-grid,

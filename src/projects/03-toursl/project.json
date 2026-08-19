@@ -4,7 +4,7 @@
   "year": "2026",
   "role": "Frontend Lead",
   "blurb": "Tour planning and booking platform for multi-day guided tours across Sri Lanka. Led the frontend: a React 18 + TypeScript SPA on Vite with a utility-first Tailwind design system.",
-  "detail": "Built the landing experience as a React 18 + TypeScript SPA on Vite with a utility-first Tailwind design system, lucide-react iconography, responsive mobile-first layouts, scroll-driven section reveals and accessible semantic markup. Optimised the bundle via code-splitting and shipped continuous preview and production deploys on Vercel.\n\nIntegrated against the Spring Boot service — layered REST, JWT plus Google OAuth, PostgreSQL with Flyway migrations, and slot reservation under optimistic locking.",
+  "detail": "Built the landing experience as a React 18 + TypeScript SPA on Vite with a utility-first Tailwind design system, lucide-react iconography, responsive mobile-first layouts, scroll-driven section reveals and accessible semantic markup. Optimised the bundle via code-splitting and shipped continuous preview and production deploys on Vercel.\n\nIntegrated against the Spring Boot service: layered REST, JWT plus Google OAuth, PostgreSQL with Flyway migrations, and slot reservation under optimistic locking.",
   "tech": [
     "React 18",
     "TypeScript",

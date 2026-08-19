@@ -4,7 +4,7 @@
   "year": "2026",
   "role": "Solo",
   "blurb": "Windows desktop client folding WhatsApp, Telegram, Instagram, TikTok, LinkedIn and Facebook into one lightweight multi-tab window, replacing several heavyweight Electron apps.",
-  "detail": "Built in C++ on the WebView2 runtime with a Dear ImGui immediate-mode interface. Implements active memory management — inactive tabs are suspended and their working sets trimmed back to the OS, cutting idle RAM substantially.\n\nAlso ships single-instance enforcement via named mutex, system-tray minimisation, per-app cache clearing for privacy, and user-configurable custom tabs, zoom levels, user agents and storage locations. CMake build for Visual Studio 2022.",
+  "detail": "Built in C++ on the WebView2 runtime with a Dear ImGui immediate-mode interface. Implements active memory management: inactive tabs are suspended and their working sets trimmed back to the OS, cutting idle RAM substantially.\n\nAlso ships single-instance enforcement via named mutex, system-tray minimisation, per-app cache clearing for privacy, and user-configurable custom tabs, zoom levels, user agents and storage locations. CMake build for Visual Studio 2022.",
   "tech": [
     "C++",
     "WebView2",

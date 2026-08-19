@@ -2,7 +2,7 @@
  * Deterministic Bauhaus-style geometric plate.
  *
  * Used for the hero composition and as the stand-in card image for projects
- * that have no photos in their folder yet. Same seed, same drawing — so a
+ * that have no photos in their folder yet. Same seed, same drawing, so a
  * project keeps its plate across builds.
  */
 

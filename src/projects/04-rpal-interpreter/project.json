@@ -4,7 +4,7 @@
   "year": "2026",
   "role": "Solo",
   "blurb": "Complete RPAL interpreter in Java 17: hand-written lexer, recursive-descent parser, AST standardiser, and a CSE machine evaluating control structures on a stack-based VM.",
-  "detail": "Implements the full pipeline — a hand-written lexer, a recursive-descent parser producing an AST, an AST standardiser, and a Control-Stack-Environment machine that flattens the standardised tree into control structures and evaluates them on a stack-based VM with lexical environments.\n\nSupports curried multi-argument lambdas, mutual recursion, tuples and escaped strings. CLI switches expose the AST and the CSE trace for inspection.",
+  "detail": "Implements the full pipeline: a hand-written lexer, a recursive-descent parser producing an AST, an AST standardiser, and a Control-Stack-Environment machine that flattens the standardised tree into control structures and evaluates them on a stack-based VM with lexical environments.\n\nSupports curried multi-argument lambdas, mutual recursion, tuples and escaped strings. CLI switches expose the AST and the CSE trace for inspection.",
   "tech": [
     "Java 17",
     "Compiler Design",

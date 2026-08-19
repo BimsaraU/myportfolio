@@ -6,7 +6,7 @@
  * Nothing here needs editing when a project is added. See README.md.
  */
 
-// project.json is optional — a folder of photos alone is a valid project.
+// project.json is optional: a folder of photos alone is a valid project.
 const metaFiles = import.meta.glob("./*/project.json", { eager: true });
 
 // Every image in every project folder, resolved to a hashed build URL.
@@ -29,7 +29,7 @@ function parseFolder(folder) {
     : { order: Number.POSITIVE_INFINITY, slug: folder };
 }
 
-/** "photo-tag" -> "Photo Tag" — the fallback when project.json has no name. */
+/** "photo-tag" -> "Photo Tag", the fallback when project.json has no name. */
 function titleCase(slug) {
   return slug
     .replace(/[-_]+/g, " ")
@@ -77,7 +77,7 @@ export const PROJECTS = folders
       folder,
       order: meta.order ?? order,
       name: meta.name ?? titleCase(slug),
-      // "header" is the small overline above the title — the context line.
+      // "header" is the small overline above the title, the context line.
       header: meta.header ?? "",
       blurb: meta.blurb ?? "",
       detail: meta.detail ?? "",

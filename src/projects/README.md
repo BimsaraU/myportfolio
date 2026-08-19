@@ -1,7 +1,7 @@
 # Adding a project
 
 One folder per project. Drop it in `src/projects/` and it appears on the site
-on the next build. Nothing else to edit — no imports, no arrays, no registry.
+on the next build. Nothing else to edit: no imports, no arrays, no registry.
 
 ```
 src/projects/
@@ -43,7 +43,7 @@ Every field is optional.
 | Field      | What it does                                                       |
 | ---------- | ------------------------------------------------------------------ |
 | `name`     | Project title. Defaults to the folder name, title-cased.           |
-| `header`   | Small red overline above the title — the context line.             |
+| `header`   | Small red overline above the title, the context line.              |
 | `blurb`    | Card copy. Keep it to two sentences.                               |
 | `detail`   | Long copy in the opened panel. Blank line separates paragraphs.    |
 | `tech`     | Tag list under the copy.                                           |
@@ -58,5 +58,5 @@ Every field is optional.
 - Supported: `.png .jpg .jpeg .webp .avif .gif .svg`
 - Sorted by filename, so prefix them `01-`, `02-` to control the sequence.
 - `cover.*` is used for the card; if absent, the first image is.
-- No photos is fine — the card falls back to a generated geometric plate.
+- No photos is fine: the card falls back to a generated geometric plate.
 - Keep them under ~500 KB each; they are bundled, not fetched.

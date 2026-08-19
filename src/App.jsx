@@ -1,6 +1,5 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Plate from "./components/Plate";
-import Stats from "./components/Stats";
 import ProjectCard from "./components/ProjectCard";
 import ProjectPanel from "./components/ProjectPanel";
 import PROJECTS from "./projects";
@@ -29,23 +28,6 @@ import {
 } from "./content";
 
 const CV_FILE = "/Bimsara-Udurawana-CV.pdf";
-
-function useReducedMotion() {
-  const [reduced, setReduced] = useState(
-    () =>
-      typeof window !== "undefined" &&
-      window.matchMedia("(prefers-reduced-motion: reduce)").matches
-  );
-
-  useEffect(() => {
-    const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
-    const on = () => setReduced(mq.matches);
-    mq.addEventListener("change", on);
-    return () => mq.removeEventListener("change", on);
-  }, []);
-
-  return reduced;
-}
 
 /** Numbered rule + title. Every major section wears one. */
 function SectionHead({ num, title, note }) {
@@ -332,14 +314,18 @@ function Contact() {
             </li>
           </ul>
 
-          <h3 className="col-title">Reference</h3>
+          <h3 className="col-title">References</h3>
           <ul className="lines">
             {REFERENCES.map((ref) => (
               <li key={ref.email} className="line">
                 <span className="line-label">{ref.name}</span>
-                <span className="line-value">{ref.org}</span>
+                <span className="line-value">{ref.title}</span>
+                <span className="line-sub">{ref.org}</span>
                 <a className="line-value" href={`mailto:${ref.email}`}>
                   {ref.email}
+                </a>
+                <a className="line-value" href={`tel:${ref.tel}`}>
+                  {ref.phone}
                 </a>
               </li>
             ))}
@@ -367,7 +353,6 @@ function Footer() {
 }
 
 export default function App() {
-  const reduced = useReducedMotion();
   const [open, setOpen] = useState(false);
   const [active, setActive] = useState(null);
 
@@ -381,7 +366,6 @@ export default function App() {
 
       <main>
         <Hero />
-        <Stats reduced={reduced} />
         <Work onOpen={setActive} />
         <Skills />
         <Record />

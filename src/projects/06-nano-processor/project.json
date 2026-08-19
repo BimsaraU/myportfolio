@@ -4,7 +4,7 @@
   "year": "2025",
   "role": "RTL Design",
   "blurb": "Progressive FPGA soft-processor in VHDL, iterating from a 4-bit to an 8-bit architecture with Xilinx primitive-level optimisation, deployed on a Basys 3 board.",
-  "detail": "Implemented the full datapath and control path from scratch — a register file with multiplexed read ports, a ripple-carry ALU, a program counter with jump and branch logic, instruction ROM, instruction decoder and a hardwired control unit — then extended the ISA beyond the base specification with additional arithmetic and bitwise operations.\n\nVerified through waveform simulation against hand-computed expected values and deployed to a Basys 3 board with seven-segment and LED output for live instruction tracing.",
+  "detail": "Implemented the full datapath and control path from scratch: a register file with multiplexed read ports, a ripple-carry ALU, a program counter with jump and branch logic, instruction ROM, instruction decoder and a hardwired control unit, then extended the ISA beyond the base specification with additional arithmetic and bitwise operations.\n\nVerified through waveform simulation against hand-computed expected values and deployed to a Basys 3 board with seven-segment and LED output for live instruction tracing.",
   "tech": [
     "VHDL",
     "Xilinx Vivado",

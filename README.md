@@ -33,7 +33,7 @@ and sets immutable caching on hashed assets.
 ## Adding a project
 
 Drop a folder into `src/projects/` with your photos and a `project.json`. It
-appears on the site on the next build — no imports, no registry, no code
+appears on the site on the next build: no imports, no registry, no code
 change. Full contract in [src/projects/README.md](src/projects/README.md).
 
 ```
@@ -55,13 +55,12 @@ the same across builds.
 index.html                       shell, Inter, favicon, meta
 public/Bimsara-Udurawana-CV.pdf  the downloadable CV
 src/main.jsx                     entry
-src/App.jsx                      topbar, hero, stats, work, skills, record, contact
+src/App.jsx                      topbar, hero, work, skills, record, contact
 src/content.js                   all CV copy: contacts, skills, education, roles
 src/projects/index.js            zero-config folder loader (import.meta.glob)
-src/projects/<slug>/             one folder per project — photos + project.json
+src/projects/<slug>/             one folder per project: photos + project.json
 src/styles.css                   design tokens, patterns, every component
 src/components/Plate.jsx         deterministic geometric plate
-src/components/Stats.jsx         count-up metrics
 src/components/ProjectCard.jsx   work grid card
 src/components/ProjectPanel.jsx  project detail dialog
 ```
@@ -99,6 +98,10 @@ Contact lines, all live:
 | Personal  | bimsaraudurawana@gmail.com  |
 | University| bimsarau.23@cse.mrt.ac.lk   |
 
+References: Prof. Dulani Meedeniya (Professor) and Dr. Chathuranga
+Hettiarachchi (Senior Lecturer), Dept. of Computer Science & Engineering,
+University of Moratuwa.
+
 ## Projects on file
 
 - [DVCon VEGA-FPGA Accelerator](https://github.com/TharakaUJ/DVcon-accelerator) · [detection side](https://github.com/BimsaraU/DVCon-SittingDucks)
@@ -115,7 +118,7 @@ Contact lines, all live:
 
 - Black on white is 21:1. Red is used for accents and large type, never for
   small body copy on white.
-- Focus is a 2px red outline, offset — never removed.
+- Focus is a 2px red outline, offset, never removed.
 - Touch targets are at least 44px.
 - The project dialog closes on Escape, takes focus on open and locks the page
   behind it.
